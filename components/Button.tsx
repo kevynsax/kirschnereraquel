@@ -1,12 +1,25 @@
 import { JSX } from "preact";
 import { IS_BROWSER } from "$fresh/runtime.ts";
 
-export function Button(props: JSX.HTMLAttributes<HTMLButtonElement>) {
-  return (
-    <button
-      {...props}
-      disabled={!IS_BROWSER || props.disabled}
-      class="px-2 py-1 border-gray-500 border-2 rounded bg-white hover:bg-gray-200 transition-colors"
-    />
-  );
+interface ButtonProps extends JSX.HTMLAttributes<HTMLButtonElement> {
+    prefixImage?: string;
+}
+
+export function Button(props: ButtonProps) {
+    return (
+        <button
+            class="button"
+            {...props}
+            disabled={!IS_BROWSER || props.disabled}
+        >
+            {props.prefixImage && (
+                <img
+                    class="button-prefix-image icon"
+                    src={props.prefixImage}
+                    alt=""
+                />
+            )}
+            {props.children}
+        </button>
+    );
 }
