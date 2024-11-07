@@ -1,9 +1,23 @@
-import Counter from "../islands/Counter.tsx";
-import { Button } from "../components/Button.tsx";
+import Counter from '../islands/Counter.tsx';
 import LocalCard from '../islands/LocalCard.tsx';
+import { listAllPosts, Post } from '../services/mural.ts';
+import { Handlers } from '$fresh/server.ts';
 
+interface HomeProps {
+    posts: Post[]
+}
 
-export default function Home() {
+export const handler: Handlers = {
+    GET: async (req, ctx) => {
+        const posts = await listAllPosts();
+
+        console.log('isso aqui foi chamado', posts)
+
+        return ctx.render({ posts })
+    }
+}
+
+export default function Home(props: HomeProps) {
     return (
         <div className="home">
             <div class="app-bar">
@@ -33,6 +47,8 @@ export default function Home() {
             </div>
 
             <LocalCard/>
+
+            {props.posts}
         </div>
         // <div class="px-4 py-8 mx-auto bg-[#86efac]">
         //   <div class="max-w-screen-md mx-auto flex flex-col items-center justify-center">
