@@ -1,35 +1,6 @@
-import { useSignal } from "@preact/signals";
-
-const segundo = 1000;
-const minuto = 1000 * 60;
-const hora = 1000 * 60 * 60;
-const dia = 1000 * 60 * 60 * 24;
+import Counter from '../islands/Counter.tsx';
 
 export default function Home() {
-    const count = useSignal(3);
-
-    const targetDate = new Date("2024-12-14T17:00:00").getTime();
-    const now = new Date().getTime();
-
-    const days = Math.floor((targetDate - now) / dia);
-    const hours = Math.floor((targetDate - now) / hora % 24);
-    const minutes = Math.floor((targetDate - now) / minuto % 60);
-    const seconds = Math.floor((targetDate - now) / segundo % 60);
-
-    const timings = [{
-        name: "dias",
-        value: days,
-    }, {
-        name: "horas",
-        value: hours,
-    }, {
-        name: "minutos",
-        value: minutes,
-    }, {
-        name: "segundos",
-        value: seconds,
-    }];
-
     return (
         <>
             <div class="app-bar">
@@ -55,15 +26,7 @@ export default function Home() {
 
             <div class="cover">
                 <img src="/cover.jpg" />
-
-                <div class="timings">
-                    {timings.map((timing) => (
-                        <div class="timing">
-                            <div class="value">{timing.value}</div>
-                            <div class="name">{timing.name}</div>
-                        </div>
-                    ))}
-                </div>
+                <Counter />
             </div>
         </>
         // <div class="px-4 py-8 mx-auto bg-[#86efac]">
