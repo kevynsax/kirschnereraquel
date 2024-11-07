@@ -1,8 +1,9 @@
 :root {
-    --primary-color: rgb(57, 72, 49);
-    --light-primary-color: rgb(211, 230, 203);
-    --font-color: white;
-    --primary-font-color: rgb(118, 160, 103);
+    --primary-color: #B29CE4;
+    --light-primary-color: #E0D4FC;
+    --font-color: #42326E;
+    --light-font-color: white;
+    --primary-font-color: #6E5B9A;
 
     --main-font: 'Roboto', sans-serif;
     --secondary-font: 'Sour Gummy', sans-serif;
@@ -106,10 +107,10 @@ html, body {
         font-family: var(--third-font), sans-serif;
         line-height: 2rem;
         font-size: 1.5rem;
+        color: var(--light-font-color);
 
         .timing{
             display: flex;
-            /*flex-direction: column;*/
             flex-wrap: wrap;
             padding: 16px;
             justify-content: center;

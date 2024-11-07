@@ -1,19 +1,20 @@
 import { useSignal } from "@preact/signals";
 
+const segundo = 1000;
+const minuto = 1000 * 60;
+const hora = 1000 * 60 * 60;
+const dia = 1000 * 60 * 60 * 24;
+
 export default function Home() {
     const count = useSignal(3);
 
     const targetDate = new Date("2024-12-14T17:00:00").getTime();
-    const days = Math.floor(
-        (targetDate - new Date().getTime()) / (1000 * 60 * 60 * 24),
-    );
-    const hours = Math.floor(
-        (targetDate - new Date().getTime()) / (1000 * 60 * 60) % 24,
-    );
-    const minutes = Math.floor(
-        (targetDate - new Date().getTime()) / (1000 * 60) % 60,
-    );
-    const seconds = Math.floor((targetDate - new Date().getTime()) / 1000 % 60);
+    const now = new Date().getTime();
+
+    const days = Math.floor((targetDate - now) / dia);
+    const hours = Math.floor((targetDate - now) / hora % 24);
+    const minutes = Math.floor((targetDate - now) / minuto % 60);
+    const seconds = Math.floor((targetDate - now) / segundo % 60);
 
     const timings = [{
         name: "dias",
@@ -48,7 +49,7 @@ export default function Home() {
                 <div class="date">14.12.24</div>
 
                 <span class="name">
-                    Raquel Vasconcelos <br /> e <br /> Kirschner Klava
+                    Raquel Rosa <br /> e <br /> Kirschner Klava
                 </span>
             </div>
 
