@@ -1,6 +1,6 @@
 :root {
     --primary-color: #B29CE4;
-    --dark-primary-color: #795ae6;
+    --dark-primary-color: #947cbc;
     --light-primary-color: #E0D4FC;
     --font-color: #42326E;
     --light-font-color: white;
@@ -24,17 +24,16 @@ html, body {
 
     display: flex;
     justify-content: center;
+    align-items: center;
 
     border-radius: 4px;
 
     background-color: var(--primary-color);
 
-    font-family: var(--secondary-font), sans-serif;
     color: var(--font-color);
+    font-weight: bold;
     cursor: pointer;
     border: none;
-
-    font-size: 1.1rem;
 
     text-transform: uppercase;
 
@@ -44,7 +43,6 @@ html, body {
 
     &:hover{
         background-color: var(--dark-primary-color);
-        color: var(--primary-font-color);
     }
 
     .button-prefix-image{
