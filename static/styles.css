@@ -193,7 +193,7 @@ html, body {
 
             .image-wrapper img {
 
-                width: 30vw;
+                width: 24vw;
                 height: 100%;
                 object-fit: cover;
                 object-position: 50% 50%;
@@ -207,7 +207,6 @@ html, body {
 
                 display: flex;
                 flex-direction: column;
-                justify-content: start;
 
                 .title{
                     font-size: 1.5rem;
@@ -262,7 +261,7 @@ html, body {
                 .actions{
                     display: flex;
 
-                    margin-top: 16px;
+                    margin-top: auto;
                 }
             }
         }
