@@ -2,13 +2,27 @@ import { Post } from '../services/mural.ts';
 import { PostCard } from './PostCard.tsx';
 import { effect, useSignal } from "@preact/signals";
 import { Button } from '../components/Button.tsx';
-import { getLocally, setLocally } from './repository.ts';
 
 interface MuralProps {
     posts: Post[];
 }
 
 const key = 'myNewlyCreatedPosts';
+
+
+export const setLocally = (key: string, value: string[]) => {
+    localStorage.setItem(key, JSON.stringify(value));
+}
+
+export const getLocally = (key: string): string[] | null => {
+    const item = localStorage.getItem(key);
+
+    if(!item) {
+        return null;
+    }
+
+    return JSON.parse(item);
+}
 
 export default function Mural(props: MuralProps) {
     const message = useSignal('');

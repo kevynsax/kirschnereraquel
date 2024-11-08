@@ -14,7 +14,6 @@ import * as $Counter from "./islands/Counter.tsx";
 import * as $LocalCard from "./islands/LocalCard.tsx";
 import * as $Mural from "./islands/Mural.tsx";
 import * as $PostCard from "./islands/PostCard.tsx";
-import * as $repository from "./islands/repository.ts";
 import type { Manifest } from "$fresh/server.ts";
 
 const manifest = {
@@ -33,7 +32,6 @@ const manifest = {
     "./islands/LocalCard.tsx": $LocalCard,
     "./islands/Mural.tsx": $Mural,
     "./islands/PostCard.tsx": $PostCard,
-    "./islands/repository.ts": $repository,
   },
   baseUrl: import.meta.url,
 } satisfies Manifest;
