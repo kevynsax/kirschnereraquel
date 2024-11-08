@@ -1,11 +1,11 @@
 
 
-export const setLocally = <T>(key: string, value: T) => {
-    localStorage?.setItem(key, JSON.stringify(value));
+export const setLocally = <T>(key: string, value: T): void => {
+    window.localStorage?.setItem(key, JSON.stringify(value));
 }
 
 export const getLocally = <T>(key: string): T | null => {
-    const item = localStorage?.getItem(key);
+    const item = window.localStorage?.getItem(key);
 
     if(!item) {
         return null;
