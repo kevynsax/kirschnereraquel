@@ -266,4 +266,84 @@ html, body {
             }
         }
     }
+
+    .mural{
+        text-align: center;
+        margin-bottom: 32px;
+
+        .title{
+            font-size: 3rem;
+            font-family: var(--secondary-font), sans-serif;
+            margin: 24px 0 40px 0;
+        }
+
+        .posts{
+            text-align: center;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+
+            .post, .newPost{
+                display: flex;
+                flex-direction: column;
+                text-align: left;
+                width: 300px;
+                border: 1px solid var(--light-primary-color);
+                border-radius: 8px;
+
+                padding: 24px;
+
+                margin: 16px;
+
+                box-shadow: 0 0 8px rgba(0, 0, 0, .1);
+            }
+
+            .post{
+                .header{
+                    display: flex;
+
+                    .avatar{
+                        width: 50px;
+                        height: 50px;
+                        border-radius: 50%;
+                        background-color: var(--light-primary-color);
+                        margin-right: 16px;
+                        font-weight: bold;
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                    }
+
+                    .info{
+                        display: flex;
+                        flex-direction: column;
+
+                        span:first-child{
+                            font-size: 1.1rem;
+                            font-weight: bold;
+                        }
+
+                        span:last-child {
+                            display: flex;
+
+                            img {
+                                width: 20px;
+                                height: 20px;
+
+                                margin-right: 2px;
+                            }
+                        }
+                    }
+                }
+
+                .message{
+                    padding-top: 24px;
+                }
+            }
+
+            .newPost{
+
+            }
+        }
+    }
 }

@@ -18,14 +18,14 @@ export default function LocalCard() {
                     <div className="wrap">
                         <div className="info">
                             <div className="icon">
-                                <img src="/date-icon.svg" />
+                                <img src="/icon/date-icon.svg" />
                             </div>
                             <span>14 de dezembro de 2024 - 17h00</span>
                         </div>
 
                         <div className="info">
                             <div className="icon">
-                                <img src="/place-icon.svg" />
+                                <img src="/icon/place-icon.svg" />
                             </div>
                             <span>
                                 Villa Bé - Ponte Alta Gama, Brasília - DF
@@ -36,13 +36,13 @@ export default function LocalCard() {
                     <div className="actions">
                         <Button
                             onClick={() => window.open(linkLocal, "_blank")}
-                            prefixImage="/place-icon.svg"
+                            prefixImage="/icon/place-icon.svg"
                         >
                             Maps
                         </Button>
                         <Button
                             onClick={() => window.open(linkLembrete, "_blank")}
-                            prefixImage="/date-icon.svg"
+                            prefixImage="/icon/date-icon.svg"
                         >
                             Add Lembrete
                         </Button>

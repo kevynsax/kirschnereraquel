@@ -1,6 +1,5 @@
 import { effect, useSignal } from "@preact/signals";
 
-
 const segundo = 1000;
 const minuto = 1000 * 60;
 const hora = 1000 * 60 * 60;

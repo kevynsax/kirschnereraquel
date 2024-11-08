@@ -1,23 +1,8 @@
 import Counter from '../islands/Counter.tsx';
 import LocalCard from '../islands/LocalCard.tsx';
-import { listAllPosts, Post } from '../services/mural.ts';
-import { Handlers } from '$fresh/server.ts';
+import { Posts } from '../islands/Posts.tsx';
 
-interface HomeProps {
-    posts: Post[]
-}
-
-export const handler: Handlers = {
-    GET: async (req, ctx) => {
-        const posts = await listAllPosts();
-
-        console.log('isso aqui foi chamado', posts)
-
-        return ctx.render({ posts })
-    }
-}
-
-export default function Home(props: HomeProps) {
+export default function Home() {
     return (
         <div className="home">
             <div class="app-bar">
@@ -47,25 +32,7 @@ export default function Home(props: HomeProps) {
             </div>
 
             <LocalCard/>
-
-            {props.posts}
+            <Posts />
         </div>
-        // <div class="px-4 py-8 mx-auto bg-[#86efac]">
-        //   <div class="max-w-screen-md mx-auto flex flex-col items-center justify-center">
-        //     <img
-        //       class="my-6"
-        //       src="/logo.svg"
-        //       width="128"
-        //       height="128"
-        //       alt="the Fresh logo: a sliced lemon dripping with juice"
-        //     />
-        //     <h1 class="text-4xl font-bold">Welcome to Fresh</h1>
-        //     <p class="my-4">
-        //       Try updating this message in the
-        //       <code class="mx-2">./routes/index.tsx</code> file, and refresh.
-        //     </p>
-        //     <Counter count={count} />
-        //   </div>
-        // </div>
     );
 }

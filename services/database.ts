@@ -4,6 +4,7 @@ interface Collection<T> {
     get(id: string): Promise<T>;
     set(value: T): Promise<void>;
     list(): Promise<T[]>;
+    clean(): Promise<void>
 }
 
 export const getCollection = <T extends {id: string}>(collectionName: string): Collection<T> => ({
@@ -18,11 +19,17 @@ export const getCollection = <T extends {id: string}>(collectionName: string): C
         await kv.set([collectionName, value.id], value);
     },
     list: async () => {
-        const records = kv.list({ prefix: collectionName });
-        const result = [];
+        const records = kv.list({ prefix: [collectionName] });
+        const result: T[] = [];
         for await (const record of records) {
             result.push(record.value as T);
         }
         return result;
+    },
+    clean: async () => {
+        const records = kv.list({ prefix: [collectionName] });
+        for await (const record of records) {
+            await kv.delete(record.key);
+        }
     }
 });

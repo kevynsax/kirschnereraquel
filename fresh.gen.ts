@@ -5,10 +5,14 @@
 import * as $_404 from "./routes/_404.tsx";
 import * as $_app from "./routes/_app.tsx";
 import * as $api_joke from "./routes/api/joke.ts";
+import * as $api_mural from "./routes/api/mural.ts";
 import * as $greet_name_ from "./routes/greet/[name].tsx";
 import * as $index from "./routes/index.tsx";
 import * as $Counter from "./islands/Counter.tsx";
 import * as $LocalCard from "./islands/LocalCard.tsx";
+import * as $NewPostCard from "./islands/NewPostCard.tsx";
+import * as $PostCard from "./islands/PostCard.tsx";
+import * as $Posts from "./islands/Posts.tsx";
 import type { Manifest } from "$fresh/server.ts";
 
 const manifest = {
@@ -16,12 +20,16 @@ const manifest = {
     "./routes/_404.tsx": $_404,
     "./routes/_app.tsx": $_app,
     "./routes/api/joke.ts": $api_joke,
+    "./routes/api/mural.ts": $api_mural,
     "./routes/greet/[name].tsx": $greet_name_,
     "./routes/index.tsx": $index,
   },
   islands: {
     "./islands/Counter.tsx": $Counter,
     "./islands/LocalCard.tsx": $LocalCard,
+    "./islands/NewPostCard.tsx": $NewPostCard,
+    "./islands/PostCard.tsx": $PostCard,
+    "./islands/Posts.tsx": $Posts,
   },
   baseUrl: import.meta.url,
 } satisfies Manifest;

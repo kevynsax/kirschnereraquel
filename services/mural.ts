@@ -25,4 +25,6 @@ if(list.length === 0) {
     await db.set(newPost);
 }
 
-export const listAllPosts = (): Promise<Post[]> => db.list();
+
+
+export const listAllPosts = () => db.list();
