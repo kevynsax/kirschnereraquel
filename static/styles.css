@@ -348,6 +348,8 @@ html, body {
 
                 .message{
                     padding-top: 24px;
+
+                    white-space: pre-wrap;
                 }
             }
 
