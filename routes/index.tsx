@@ -1,8 +1,22 @@
 import Counter from '../islands/Counter.tsx';
 import LocalCard from '../islands/LocalCard.tsx';
-import { Posts } from '../islands/Posts.tsx';
+import { FreshContext, PageProps } from "$fresh/server.ts";
+import { listAllPosts, Post } from '../services/mural.ts';
+import Mural from "../islands/Mural.tsx";
 
-export default function Home() {
+export const handler = {
+    async GET(_req: Request, _ctx: FreshContext): Promise<Response> {
+        const lst = await listAllPosts();
+
+        return _ctx.render({posts: lst})
+    }
+}
+
+interface Props{
+    posts: Post[]
+}
+
+export default function Home(props: PageProps<Props>) {
     return (
         <div className="home">
             <div class="app-bar">
@@ -31,8 +45,8 @@ export default function Home() {
                 <Counter />
             </div>
 
-            <LocalCard/>
-            <Posts />
+            <LocalCard />
+            <Mural posts={props.data.posts} />
         </div>
     );
 }

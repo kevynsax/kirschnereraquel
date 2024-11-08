@@ -3,6 +3,7 @@ const kv = await Deno.openKv();
 interface Collection<T> {
     get(id: string): Promise<T>;
     set(value: T): Promise<void>;
+    delete(id: string): Promise<void>;
     list(): Promise<T[]>;
     clean(): Promise<void>
 }
@@ -17,6 +18,9 @@ export const getCollection = <T extends {id: string}>(collectionName: string): C
     },
     set: async (value: T) => {
         await kv.set([collectionName, value.id], value);
+    },
+    delete: async (id: string) => {
+        await kv.delete([collectionName, id]);
     },
     list: async () => {
         const records = kv.list({ prefix: [collectionName] });

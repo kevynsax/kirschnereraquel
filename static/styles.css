@@ -9,6 +9,7 @@
     --main-font: 'Roboto', sans-serif;
     --secondary-font: 'Sour Gummy', sans-serif;
     --third-font: 'Playwrite BE VLG', cursive;
+    --fourth-font: 'Kanit', sans-serif;
 }
 
 html, body {
@@ -287,7 +288,7 @@ html, body {
                 display: flex;
                 flex-direction: column;
                 text-align: left;
-                width: 300px;
+                width: 280px;
                 border: 1px solid var(--light-primary-color);
                 border-radius: 8px;
 
@@ -318,6 +319,8 @@ html, body {
                         display: flex;
                         flex-direction: column;
 
+                        flex-grow: 1;
+
                         span:first-child{
                             font-size: 1.1rem;
                             font-weight: bold;
@@ -334,6 +337,13 @@ html, body {
                             }
                         }
                     }
+
+                    .delete{
+                        cursor: pointer;
+                        &:hover{
+                            opacity: .7;
+                        }
+                    }
                 }
 
                 .message{
@@ -342,7 +352,38 @@ html, body {
             }
 
             .newPost{
+                align-items: center;
 
+                .icon{
+                    width: 100px;
+                    height: 100px;
+                    border-radius: 50%;
+                    background-color: var(--light-primary-color);
+                    margin-right: 16px;
+                    font-weight: bold;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+
+                    img{
+                        width: 60px;
+                    }
+                }
+
+                .form{
+                    padding: 16px 0;
+
+                    input,textarea{
+                        width: calc(100% - 16px);
+                        border: none;
+                        border-bottom: 1px solid var(--light-primary-color);
+                        border-radius: 8px;
+                        margin-bottom: 16px;
+                        padding: 8px;
+
+                        font-family: var(--fourth-font), sans-serif;
+                    }
+                }
             }
         }
     }

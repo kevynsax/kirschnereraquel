@@ -1,5 +1,10 @@
 import { getCollection } from './database.ts';
 
+export interface CreatePostDto{
+    message: string;
+    author: string;
+}
+
 export interface Post {
     id: string;
     message: string;
@@ -12,19 +17,23 @@ const db = getCollection<Post>('mural');
 
 const list = await db.list();
 
-if(list.length === 0) {
-    console.log('No murals found');
+if(list.some(x => x.author === 'delete-all')) {
+    await db.clean();
+}
 
+export const listAllPosts = () => db.list();
+
+export const createPost = async (post: Post): Promise<Post> => {
     const newPost: Post = {
         id: crypto.randomUUID(),
-        message: "Muito feliz com essa nova familia que esta se formando! Amo muito vocês!",
-        author: "Kevyn Klava",
+        message: post.message,
+        author: post.author,
         createdAt: new Date(),
     }
 
     await db.set(newPost);
+
+    return newPost;
 }
 
-
-
-export const listAllPosts = () => db.list();
+export const deletePost = db.delete;
