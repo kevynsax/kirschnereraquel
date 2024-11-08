@@ -6,15 +6,15 @@ export const setLocally = <T>(key: string, value: T): void => {
         return
     }
 
-    window!.localStorage.setItem(key, JSON.stringify(value));
+    window!.localStorage?.setItem(key, JSON.stringify(value));
 }
 
 export const getLocally = <T>(key: string): T | null => {
     if(typeof window === 'undefined') {
-        return JSON.parse(localStorage.getItem(key) ?? 'null');
+        return JSON.parse(localStorage?.getItem(key) ?? 'null');
     }
 
-    const item = window!.localStorage.getItem(key);
+    const item = window!.localStorage?.getItem(key);
 
     if(!item) {
         return null;
