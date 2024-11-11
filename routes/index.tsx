@@ -3,6 +3,7 @@ import LocalCard from '../islands/LocalCard.tsx';
 import { FreshContext, PageProps } from "$fresh/server.ts";
 import { listAllPosts, Post } from '../services/mural.ts';
 import Mural from "../islands/Mural.tsx";
+import { Gifts } from '../islands/Gifts.tsx';
 
 export const handler = {
     async GET(_req: Request, _ctx: FreshContext): Promise<Response> {
@@ -27,9 +28,9 @@ export default function Home(props: PageProps<Props>) {
                 </div>
 
                 <div class="menu">
-                    <span>Lista de presentes</span>
-                    <span>Mural de recados</span>
-                    <span>Casamento</span>
+                    <span data-label='Gifts'>Lista de presentes</span>
+                    <span data-label='Mural'>Mural de recados</span>
+                    <span data-label='Local'>Casamento</span>
                 </div>
             </div>
             <div class="banner">
@@ -47,6 +48,8 @@ export default function Home(props: PageProps<Props>) {
 
             <LocalCard />
             <Mural posts={props.data.posts} />
+
+            <Gifts />
         </div>
     );
 }

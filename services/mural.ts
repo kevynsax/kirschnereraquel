@@ -21,9 +21,12 @@ if(list.some(x => x.author === 'delete-all')) {
     await db.clean();
 }
 
-export const listAllPosts = () => db.list();
+export const listAllPosts = async () => {
+    const result = await db.list();
+    return result.filter(x => !x.deletedAt);
+};
 
-export const createPost = async (post: Post): Promise<Post> => {
+export const createPost = async (post: CreatePostDto): Promise<Post> => {
     const newPost: Post = {
         id: crypto.randomUUID(),
         message: post.message,
@@ -40,4 +43,12 @@ export const createPost = async (post: Post): Promise<Post> => {
     return newPost;
 }
 
-export const deletePost = db.delete;
+export const deletePost = async (id: string) => {
+    const item = await db.get(id);
+    if(!item || item.deletedAt) {
+        throw new Error('Post not found');
+    }
+
+    item.deletedAt = new Date();
+    await db.set(item);
+}
