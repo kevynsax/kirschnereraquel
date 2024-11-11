@@ -1,4 +1,5 @@
 import { Gift } from '../services/gifts.ts';
+import { Button } from '../components/Button.tsx';
 
 const products: Gift[] = [
     {
@@ -29,10 +30,11 @@ const products: Gift[] = [
         image: './gifts/utensilio-churrasco.png',
         createdAt: new Date()
     }
-]
+];
+
+const formatter = new Intl.NumberFormat('pt-BR', {style: 'currency', currency: 'BRL'});
 
 export const Gifts = () => {
-    return null;
     return (
         <div className='gifts'>
             <h1>Presentes</h1>
@@ -41,8 +43,9 @@ export const Gifts = () => {
                 {products.map(product => (
                     <div className='product'>
                         <img src={product.image} />
-                        <h6>{product.name}</h6>
-                        <span>{product.price}</span>
+                        <span className="name">{product.name}</span>
+                        <span className="price">{formatter.format(product.price)}</span>
+                        <Button>Presentear</Button>
                     </div>
                 ))}
             </div>

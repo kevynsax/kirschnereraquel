@@ -400,8 +400,45 @@ html, body {
         }
 
         .products{
-            .product{
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
 
+            padding: 32px;
+
+            .product{
+                max-width: 210px;
+                margin: 24px;
+
+                span{
+                    text-align: left;
+                    display: block;
+
+                    &.name{
+                        font-weight: bold;
+                    }
+
+                    &.price{
+                        margin-bottom: 8px;
+
+                        font-weight: 300;
+                    }
+                }
+
+                .button{
+                    margin-left: 0;
+                    width: 100%;
+                }
+
+                img{
+                    width: 100%;
+                    border: 1px solid rgba(.3,.3,.3,.1);
+
+                    object-fit: cover;
+                    object-position: 50% 50%;
+
+                    border-radius: 8px;
+                }
             }
         }
     }

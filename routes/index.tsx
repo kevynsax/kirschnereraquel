@@ -37,7 +37,7 @@ export default function Home(props: PageProps<Props>) {
                 <div class="date">14.12.24</div>
 
                 <span class="name">
-                    Raquel Rosa <br /> e <br /> Kirschner Klava
+                    Raquel <br /> e <br /> Kirschner
                 </span>
             </div>
 

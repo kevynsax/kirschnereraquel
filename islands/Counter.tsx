@@ -10,7 +10,7 @@ interface NameValue {
     value: number;
 }
 
-const targetDate = new Date("2024-12-14T17:00:00").getTime();
+const targetDate = new Date("2024-12-14T16:30:00").getTime();
 
 const getTimings = (timeToTarget: number): NameValue[] => {
     const days = Math.floor(timeToTarget/ dia);
