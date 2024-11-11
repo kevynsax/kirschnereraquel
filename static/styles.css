@@ -390,6 +390,21 @@ html, body {
             }
         }
     }
+
+    .gifts{
+        text-align: center;
+        margin-bottom: 32px;
+
+        h1{
+            margin: 0;
+        }
+
+        .products{
+            .product{
+
+            }
+        }
+    }
 }
 
 @media only screen and (max-width: 428px), (-webkit-min-device-pixel-ratio: 3) {
@@ -447,56 +462,75 @@ html, body {
             }
         }
 
-        .place .card-place {
-            background: white;
-            flex-direction: column;
+        .place{
+            padding: 24px;
 
-            .image-wrapper img {
-                width: 100%;
-                height: 200px;
-                border-radius: 8px 8px 0 0;
-            }
+            .card-place {
+                background: white;
+                flex-direction: column;
 
-            .place-info {
-                padding: 16px;
-
-                .title {
-                    font-size: 1.2rem;
+                .image-wrapper img {
+                    width: 100%;
+                    height: unset;
+                    border-radius: 8px 8px 0 0;
                 }
 
-                .info {
-                    .icon {
-                        width: 24px;
-                        height: 24px;
+                .place-info {
+                    padding: 16px;
 
-                        img {
+                    .title {
+                        font-size: 1.2rem;
+                    }
+
+                    .info {
+                        .icon {
+                            width: 24px;
+                            height: 24px;
+
+                            img {
+                                width: 16px;
+                                height: 16px;
+                            }
+                        }
+
+                        span {
+                            margin-left: 8px;
+                        }
+
+                        &:not(:last-child)::after {
                             width: 16px;
-                            height: 16px;
                         }
                     }
 
-                    span {
-                        margin-left: 8px;
-                    }
-
-                    &:not(:last-child)::after {
-                        width: 16px;
-                    }
-                }
-
-                .actions{
-                    margin-left: 0;
-                    margin-top: 24px;
-
-                    >*:first-child {
+                    .actions{
                         margin-left: 0;
+                        margin-top: 24px;
+
+                        >*:first-child {
+                            margin-left: 0;
+                        }
                     }
                 }
             }
         }
 
-        .mural .title{
-            font-size: 2rem;
+        .mural{
+            padding: 24px;
+            margin-bottom: 0;
+
+            .title{
+                font-size: 2rem;
+            }
+
+            .posts{
+                flex-direction: column;
+                .post, .newPost{
+                    width: unset;
+
+                    /*padding: 0;*/
+                    margin: 8px 0;
+                }
+            }
         }
     }
 }

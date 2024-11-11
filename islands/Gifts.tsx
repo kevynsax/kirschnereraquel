@@ -32,9 +32,20 @@ const products: Gift[] = [
 ]
 
 export const Gifts = () => {
+    return null;
     return (
-        <div>
-            <h1>.</h1>
+        <div className='gifts'>
+            <h1>Presentes</h1>
+
+            <div className='products'>
+                {products.map(product => (
+                    <div className='product'>
+                        <img src={product.image} />
+                        <h6>{product.name}</h6>
+                        <span>{product.price}</span>
+                    </div>
+                ))}
+            </div>
         </div>
     );
 }
