@@ -4,35 +4,28 @@ import { FreshContext, PageProps } from "$fresh/server.ts";
 import { listAllPosts, Post } from '../services/mural.ts';
 import Mural from "../islands/Mural.tsx";
 import { Gifts } from '../islands/Gifts.tsx';
+import App from './_app.tsx';
+import { AppBar } from '../components/AppBar.tsx';
+import { Gift, listAllGifts } from '../services/gifts.ts';
 
 export const handler = {
     async GET(_req: Request, _ctx: FreshContext): Promise<Response> {
-        const lst = await listAllPosts();
+        const posts = await listAllPosts();
+        const products = await listAllGifts();
 
-        return _ctx.render({posts: lst})
+        return _ctx.render({posts, products})
     }
 }
 
 interface Props{
-    posts: Post[]
+    posts: Post[],
+    products: Gift[]
 }
 
 export default function Home(props: PageProps<Props>) {
     return (
         <div className="home">
-            <div class="app-bar">
-                <div class="logo">
-                    <span>K</span>
-                    <span>&</span>
-                    <span>R</span>
-                </div>
-
-                <div class="menu">
-                    <span data-label='Gifts'>Lista de presentes</span>
-                    <span data-label='Mural'>Mural de recados</span>
-                    <span data-label='Local'>Casamento</span>
-                </div>
-            </div>
+            <AppBar />
             <div class="banner">
                 <div class="date">14.12.24</div>
 
@@ -49,7 +42,7 @@ export default function Home(props: PageProps<Props>) {
             <LocalCard />
             <Mural posts={props.data.posts} />
 
-            <Gifts />
+            <Gifts products={props.data.products} />
         </div>
     );
 }

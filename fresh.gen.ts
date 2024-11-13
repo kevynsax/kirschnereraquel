@@ -7,14 +7,17 @@ import * as $_app from "./routes/_app.tsx";
 import * as $api_gift from "./routes/api/gift.ts";
 import * as $api_mural_id_ from "./routes/api/mural/[id].ts";
 import * as $api_mural_index from "./routes/api/mural/index.ts";
-import * as $greet_name_ from "./routes/greet/[name].tsx";
+import * as $checkout_id_ from "./routes/checkout/[id].tsx";
 import * as $index from "./routes/index.tsx";
 import * as $Counter from "./islands/Counter.tsx";
+import * as $GiftForm from "./islands/GiftForm.tsx";
 import * as $Gifts from "./islands/Gifts.tsx";
 import * as $LocalCard from "./islands/LocalCard.tsx";
 import * as $Mural from "./islands/Mural.tsx";
 import * as $PostCard from "./islands/PostCard.tsx";
 import * as $repo from "./islands/repo.ts";
+import * as $utils_Field from "./islands/utils/Field.tsx";
+import * as $utils_TextField from "./islands/utils/TextField.tsx";
 import type { Manifest } from "$fresh/server.ts";
 
 const manifest = {
@@ -24,16 +27,19 @@ const manifest = {
     "./routes/api/gift.ts": $api_gift,
     "./routes/api/mural/[id].ts": $api_mural_id_,
     "./routes/api/mural/index.ts": $api_mural_index,
-    "./routes/greet/[name].tsx": $greet_name_,
+    "./routes/checkout/[id].tsx": $checkout_id_,
     "./routes/index.tsx": $index,
   },
   islands: {
     "./islands/Counter.tsx": $Counter,
+    "./islands/GiftForm.tsx": $GiftForm,
     "./islands/Gifts.tsx": $Gifts,
     "./islands/LocalCard.tsx": $LocalCard,
     "./islands/Mural.tsx": $Mural,
     "./islands/PostCard.tsx": $PostCard,
     "./islands/repo.ts": $repo,
+    "./islands/utils/Field.tsx": $utils_Field,
+    "./islands/utils/TextField.tsx": $utils_TextField,
   },
   baseUrl: import.meta.url,
 } satisfies Manifest;

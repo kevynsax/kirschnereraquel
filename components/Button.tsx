@@ -8,8 +8,8 @@ interface ButtonProps extends JSX.HTMLAttributes<HTMLButtonElement> {
 export function Button(props: ButtonProps) {
     return (
         <button
-            class="button"
             {...props}
+            class={`button ${props.class || ""}`}
             disabled={!IS_BROWSER || props.disabled}
         >
             {props.prefixImage && (
