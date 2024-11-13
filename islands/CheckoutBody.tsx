@@ -12,7 +12,7 @@ export const CheckoutBody = (props: CheckoutProps) => {
 
     return (
         <>
-            <GiftForm id={props.product.id} />
+            <GiftForm id={props.product.id} price={total} />
             <div className="summary">
                 <div className="header">
                     <div className="avatar">

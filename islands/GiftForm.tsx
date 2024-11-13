@@ -1,9 +1,11 @@
 import { Field } from "./utils/Field.tsx";
 import { useCallback, useState } from "preact/hooks";
 import { Button } from '../components/Button.tsx';
+import { FieldPhoneNumber } from './utils/FieldPhoneNumber.tsx';
 
 interface HasId {
     id: string;
+    price: number;
 }
 
 export const GiftForm = (props: HasId) => {
@@ -30,9 +32,8 @@ export const GiftForm = (props: HasId) => {
                         value={name}
                         onChange={setName}
                     />
-                    <Field
+                    <FieldPhoneNumber
                         label="Seu telefone"
-                        placeholder="(61) 9 8589-1092"
                         value={phone}
                         onChange={setPhone}
                     />
