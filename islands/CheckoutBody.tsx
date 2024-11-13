@@ -39,10 +39,10 @@ export const CheckoutBody = (props: CheckoutProps) => {
                         }).format(total)}</span>
                 </div>
 
-                {/*<div className="card-info">*/}
-                {/*    <span>Parcele em até 6x no cartão</span>*/}
-                {/*    <img src="/icon/cards.svg" alt="" />*/}
-                {/*</div>*/}
+                <div className="card-info">
+                    <span>Parcele em até 6x no cartão</span>
+                    <img src="/icon/cards.svg" alt="" />
+                </div>
             </div>
         </>
     );
