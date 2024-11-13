@@ -21,36 +21,36 @@ export interface GiftWithStock extends Gift {
 
 const db = getCollection<Gift>('gifts');
 
-const lst = await db.list();
+export const resetProducts = async () => {
+    await db.clean();
 
-if(lst.length === 0) {
     const products: Gift[] = [
         {
             id: crypto.randomUUID(),
             name: 'Furadeira',
             price: 210.31,
-            image: './gifts/furadeira.png',
+            image: '/gifts/furadeira.png',
             createdAt: new Date()
         },
         {
             id: crypto.randomUUID(),
             name: 'Banquetas',
             price: 260,
-            image: './gifts/chair.png',
+            image: '/gifts/chair.png',
             createdAt: new Date()
         },
         {
             id: crypto.randomUUID(),
             name: 'Chave de ferramenta',
             price: 200,
-            image: './gifts/caixa-de-ferramenta.png',
+            image: '/gifts/caixa-de-ferramenta.png',
             createdAt: new Date()
         },
         {
             id: crypto.randomUUID(),
             name: 'Kit utensílios de churrasco',
             price: 238.99,
-            image: './gifts/utensilio-churrasco.png',
+            image: '/gifts/utensilio-churrasco.png',
             createdAt: new Date()
         }
     ];
@@ -60,10 +60,11 @@ if(lst.length === 0) {
     }
 }
 
+
 export const getGift = async (id: string): Promise<Gift> => {
     const gift = await db.get(id);
-    if (!gift || gift.deletedAt) {
-        throw new Error('Gift not found');
+    if (!gift || !!gift.deletedAt) {
+        throw new Error('Gift not found with id ' + id);
     }
 
     return gift;

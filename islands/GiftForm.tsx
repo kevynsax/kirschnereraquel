@@ -1,6 +1,5 @@
 import { Field } from "./utils/Field.tsx";
-import { TextField } from "./utils/TextField.tsx";
-import { useCallback, useEffect, useState } from "preact/hooks";
+import { useCallback, useState } from "preact/hooks";
 import { Button } from '../components/Button.tsx';
 
 interface HasId {
@@ -33,18 +32,17 @@ export const GiftForm = (props: HasId) => {
                     />
                     <Field
                         label="Seu telefone"
-                        placeholder="joao@example.com"
+                        placeholder="(61) 9 8589-1092"
                         value={phone}
                         onChange={setPhone}
                     />
-                    <TextField
-                        label="Deixe uma mensagem especial"
+                    <Field
+                        label="Deixe uma mensagem especial (opcional)"
                         placeholder="Escolha a sua mensagem"
                         value={message}
                         onChange={setMessage}
                         qtdLines={5}
                     />
-                    {isDisabled && <span className="warning">Preencha os campos obrigatórios</span>}
                     <Button onClick={increaseStep} disabled={isDisabled} class='action'>Selecionar pagamento</Button>
                 </>
             )}

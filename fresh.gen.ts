@@ -9,6 +9,7 @@ import * as $api_mural_id_ from "./routes/api/mural/[id].ts";
 import * as $api_mural_index from "./routes/api/mural/index.ts";
 import * as $checkout_id_ from "./routes/checkout/[id].tsx";
 import * as $index from "./routes/index.tsx";
+import * as $CheckoutBody from "./islands/CheckoutBody.tsx";
 import * as $Counter from "./islands/Counter.tsx";
 import * as $GiftForm from "./islands/GiftForm.tsx";
 import * as $Gifts from "./islands/Gifts.tsx";
@@ -17,7 +18,7 @@ import * as $Mural from "./islands/Mural.tsx";
 import * as $PostCard from "./islands/PostCard.tsx";
 import * as $repo from "./islands/repo.ts";
 import * as $utils_Field from "./islands/utils/Field.tsx";
-import * as $utils_TextField from "./islands/utils/TextField.tsx";
+import * as $utils_FieldPrice from "./islands/utils/FieldPrice.tsx";
 import type { Manifest } from "$fresh/server.ts";
 
 const manifest = {
@@ -31,6 +32,7 @@ const manifest = {
     "./routes/index.tsx": $index,
   },
   islands: {
+    "./islands/CheckoutBody.tsx": $CheckoutBody,
     "./islands/Counter.tsx": $Counter,
     "./islands/GiftForm.tsx": $GiftForm,
     "./islands/Gifts.tsx": $Gifts,
@@ -39,7 +41,7 @@ const manifest = {
     "./islands/PostCard.tsx": $PostCard,
     "./islands/repo.ts": $repo,
     "./islands/utils/Field.tsx": $utils_Field,
-    "./islands/utils/TextField.tsx": $utils_TextField,
+    "./islands/utils/FieldPrice.tsx": $utils_FieldPrice,
   },
   baseUrl: import.meta.url,
 } satisfies Manifest;

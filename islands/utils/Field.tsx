@@ -1,13 +1,18 @@
-import { useEffect, useState, useCallback } from "preact/hooks";
+import { useEffect, useState, useCallback, useRef } from "preact/hooks";
+import { createRef } from "preact";
 
 interface FieldProps{
-    label: string;
+    label?: string;
     placeholder?: string;
     value: string;
     onChange: (value: string) => void;
+    qtdLines?: number;
+    prefix?: string;
+    validator?: (value: string) => boolean;
 }
 
 export const Field = (props: FieldProps) => {
+    const inputRef = useRef<HTMLInputElement>()
     const [val, setVal] = useState(props.value);
 
     useEffect(() => {
@@ -18,14 +23,27 @@ export const Field = (props: FieldProps) => {
     }, [props.value]);
 
     const handleChange = useCallback((e: any) => {
-        setVal(e.target.value);
-        props.onChange(e.target.value);
-    }, [props.onChange]);
+        const newVal = e.target.value;
+
+        if(props.validator && !props.validator(newVal)){
+            inputRef.current!.value = val;
+            return;
+        }
+
+        setVal(newVal);
+        props.onChange(newVal);
+    }, [setVal, props.onChange, val]);
+    
+    const Component = props.qtdLines ? 'textarea' : 'input';
 
     return (
         <div className='field'>
-            <span className='label'>{props.label}</span>
-            <input type='text' placeholder={props.placeholder} value={val} onChange={handleChange} />
+            {props.label && <span className='label'>{props.label}</span>}
+
+            <div className="input">
+                {props.prefix && <span className='prefix'>{props.prefix}</span>}
+                <Component ref={inputRef} placeholder={props.placeholder} value={val} onInput={handleChange} rows={props.qtdLines} />
+            </div>
         </div>
     );
 }

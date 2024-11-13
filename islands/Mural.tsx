@@ -1,8 +1,10 @@
 import { Post } from '../services/mural.ts';
 import { PostCard } from './PostCard.tsx';
-import { effect, useSignal } from "@preact/signals";
+import { useSignal } from "@preact/signals";
+import { useState } from 'preact/hooks';
 import { Button } from '../components/Button.tsx';
 import { getLocally, setLocally } from './repo.ts';
+import { Field } from './utils/Field.tsx';
 
 interface MuralProps {
     posts: Post[];
@@ -11,17 +13,17 @@ interface MuralProps {
 const key = 'myNewlyCreatedPosts';
 
 export default function Mural(props: MuralProps) {
-    const message = useSignal('');
-    const author = useSignal('');
-    const posts = useSignal(props.posts);
+    const [message, setMessage] = useState('');
+    const [author, setAuthor] = useState('');
+    const [posts, setPosts] = useState(props.posts);
     const myNewlyCreatedPosts = useSignal<string[]>(getLocally(key) ?? []);
 
     const handleSubmit = async () => {
         const newPost = await fetch('/api/mural', {
             method: 'POST',
             body: JSON.stringify({
-                message: message.value,
-                author: author.value
+                message: message,
+                author: author
             })
         }).then(x => {
             if(x.status >= 300) {
@@ -35,10 +37,11 @@ export default function Mural(props: MuralProps) {
         setLocally(key, myNewlyCreatedPosts.value);
 
         const lst = await fetch('/api/mural');
-        posts.value = await lst.json();
+        const posts = await lst.json();
+        setPosts(posts);
 
-        message.value = '';
-        author.value = '';
+        setMessage('');
+        setAuthor('');
     }
 
     const getDeletePost = (id: string): undefined | VoidFunction => {
@@ -55,7 +58,9 @@ export default function Mural(props: MuralProps) {
             setLocally(key, myNewlyCreatedPosts.value);
 
             const lst = await fetch('/api/mural');
-            posts.value = await lst.json();
+            const posts = await lst.json();
+
+            setPosts(posts);
         }
     }
 
@@ -69,23 +74,24 @@ export default function Mural(props: MuralProps) {
                         <img src="./icon/chat.svg" />
                     </div>
                     <div className="form">
-                        <textarea
-                            rows={4}
+                        <Field
+                            qtdLines={4}
                             placeholder="Conte uma história ou deixe um recado para o Kirschner e Raquel"
-                            value={message.value}
-                            onInput={e => message.value = (e.target as HTMLInputElement).value}
+                            value={message}
+                            onChange={setMessage}
                         />
-                        <input
-                            type='text'
+                        <Field
                             placeholder='Seu nome'
-                            value={author.value}
-                            onInput={e => author.value = (e.target as HTMLInputElement).value}
+                            value={author}
+                            onChange={setAuthor}
                         />
                         <Button onClick={handleSubmit}>Enviar</Button>
                     </div>
                 </div>
 
-                {posts.value.map(post => <PostCard post={post} onDelete={getDeletePost(post.id)} />)}
+                {posts
+                    .sort((a, b) => a.createdAt > b.createdAt ? -1 : 1)
+                    .map(post => <PostCard post={post} onDelete={getDeletePost(post.id)} />)}
             </div>
         </div>
     )

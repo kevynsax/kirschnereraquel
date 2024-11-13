@@ -51,24 +51,11 @@ html, body {
         height: 20px;
         margin-right: 8px;
     }
-}
 
-input, textarea {
-    width: calc(100% - 16px);
-    border: 1px solid var(--light-primary-color);
-    border-radius: 8px;
-    margin-bottom: 16px;
-    padding: 8px;
-
-    font-family: var(--fourth-font), sans-serif;
-    font-size: .9em;
-
-    &::placeholder{
-        color: var(--dark-primary-color);
-    }
-
-    &:disabled{
-        background-color: tomato;
+    &[disabled] {
+        background-color: #ccc;
+        color: gray;
+        cursor: not-allowed;
     }
 }
 
@@ -93,6 +80,42 @@ input, textarea {
         font-weight: 500;
         margin-bottom: 8px;
         display: block;
+
+    }
+
+    .input{
+        display: flex;
+        align-items: center;
+
+        margin-bottom: 16px;
+        border: 1px solid var(--light-primary-color);
+        background: white;
+        border-radius: 8px;
+        padding: 8px;
+        width: calc(100% - 16px);
+
+        .prefix{
+            margin-right: 8px;
+            font-size: .8rem;
+            font-weight: bold;
+        }
+
+        input, textarea {
+            width: 100%;
+            border: none;
+            outline: none;
+
+            font-family: var(--fourth-font), sans-serif;
+            font-size: .9em;
+
+            &::placeholder{
+                color: var(--dark-primary-color);
+            }
+        }
+
+        &:focus-within{
+            border-color: var(--primary-color);
+        }
 
     }
 }
@@ -639,6 +662,62 @@ input, textarea {
 
         .action{
             width: 100%;
+        }
+    }
+
+    .summary{
+        padding: 32px;
+        .header{
+            display: flex;
+            align-items: start;
+            padding: 24px 0;
+
+            .title{
+                font-size: 1.3rem;
+                font-weight: bold;
+                margin-bottom: 16px;
+                font-family: var(--fourth-font), sans-serif;
+                line-height: 1em;
+            }
+        }
+
+        .product{
+            display: flex;
+            align-items: center;
+            padding: 16px 0;
+
+            .name{
+                flex-grow: 1;
+                color: gray;
+                font-weight: 400;
+            }
+
+            .price{
+                font-weight: 300;
+                max-width: 110px;
+            }
+        }
+
+        .total{
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px 0;
+            border-top: 1px solid rgba(0,0,0,.1);
+
+            font-weight: bold;
+        }
+
+        .header .avatar img, .product img{
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background-color: var(--light-primary-color);
+            margin-right: 16px;
+            font-weight: bold;
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
     }
 }
