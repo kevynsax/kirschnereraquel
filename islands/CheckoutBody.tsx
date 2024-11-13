@@ -40,7 +40,7 @@ export const CheckoutBody = (props: CheckoutProps) => {
                 </div>
 
                 <div className="card-info">
-                    <span>Parcele em até 6x no cartão</span>
+                    <span>Pode usar esses cartões aqui</span>
                     <img src="/icon/cards.svg" alt="" />
                 </div>
             </div>
