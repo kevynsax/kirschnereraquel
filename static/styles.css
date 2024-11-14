@@ -663,6 +663,42 @@ html, body {
         .action{
             width: 100%;
         }
+
+        .payment-option{
+            display: flex;
+            align-items: center;
+
+            padding: 24px 16px;
+            cursor: pointer;
+
+            &:hover{
+                background: #f9f9f9;
+            }
+
+            .icon img{
+                width: 32px;
+            }
+
+            .text {
+                padding-left: 24px;
+                flex-grow: 1;
+                span {
+                    display: block;
+
+                    &:first-child{
+                        font-weight: bold;
+                    }
+                    &:last-child{
+                        font-weight: 300;
+                        font-size: .9rem;
+                    }
+                }
+            }
+
+            .suffix img{
+                width: 88px;
+            }
+        }
     }
 
     .summary{
@@ -712,7 +748,7 @@ html, body {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 8px 16px;
+            padding: 16px;
             background: #e6e6e6;
             border-radius: 8px;
 

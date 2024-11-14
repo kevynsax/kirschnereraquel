@@ -9,6 +9,7 @@ interface FieldProps{
     qtdLines?: number;
     prefix?: string;
     validator?: (value: string) => boolean;
+    type?: 'text' | 'password';
 }
 
 export const Field = (props: FieldProps) => {
@@ -42,7 +43,7 @@ export const Field = (props: FieldProps) => {
 
             <div className="input">
                 {props.prefix && <span className='prefix'>{props.prefix}</span>}
-                <Component ref={inputRef} placeholder={props.placeholder} value={val} onInput={handleChange} rows={props.qtdLines} />
+                <Component type={props.type} ref={inputRef} placeholder={props.placeholder} value={val} onInput={handleChange} rows={props.qtdLines} />
             </div>
         </div>
     );

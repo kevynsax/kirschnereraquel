@@ -4,13 +4,17 @@
 
 import * as $_404 from "./routes/_404.tsx";
 import * as $_app from "./routes/_app.tsx";
+import * as $api_donate_id_ from "./routes/api/donate/[id].ts";
+import * as $api_donate_index from "./routes/api/donate/index.ts";
 import * as $api_gift from "./routes/api/gift.ts";
 import * as $api_mural_id_ from "./routes/api/mural/[id].ts";
 import * as $api_mural_index from "./routes/api/mural/index.ts";
 import * as $checkout_id_ from "./routes/checkout/[id].tsx";
+import * as $donation_id_ from "./routes/donation/[id].tsx";
 import * as $index from "./routes/index.tsx";
 import * as $CheckoutBody from "./islands/CheckoutBody.tsx";
 import * as $Counter from "./islands/Counter.tsx";
+import * as $DonationDetailed from "./islands/DonationDetailed.tsx";
 import * as $GiftForm from "./islands/GiftForm.tsx";
 import * as $Gifts from "./islands/Gifts.tsx";
 import * as $LocalCard from "./islands/LocalCard.tsx";
@@ -27,15 +31,19 @@ const manifest = {
   routes: {
     "./routes/_404.tsx": $_404,
     "./routes/_app.tsx": $_app,
+    "./routes/api/donate/[id].ts": $api_donate_id_,
+    "./routes/api/donate/index.ts": $api_donate_index,
     "./routes/api/gift.ts": $api_gift,
     "./routes/api/mural/[id].ts": $api_mural_id_,
     "./routes/api/mural/index.ts": $api_mural_index,
     "./routes/checkout/[id].tsx": $checkout_id_,
+    "./routes/donation/[id].tsx": $donation_id_,
     "./routes/index.tsx": $index,
   },
   islands: {
     "./islands/CheckoutBody.tsx": $CheckoutBody,
     "./islands/Counter.tsx": $Counter,
+    "./islands/DonationDetailed.tsx": $DonationDetailed,
     "./islands/GiftForm.tsx": $GiftForm,
     "./islands/Gifts.tsx": $Gifts,
     "./islands/LocalCard.tsx": $LocalCard,
