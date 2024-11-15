@@ -1,4 +1,4 @@
-import { Gift } from '../services/gifts.ts';
+import { Gift } from './Gift.ts';
 
 export enum DonationStatus{
     PENDING = 'pending',

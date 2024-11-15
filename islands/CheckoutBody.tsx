@@ -1,7 +1,7 @@
 import { useState } from "preact/hooks";
-import { Gift } from "../services/gifts.ts";
 import { GiftForm } from "./GiftForm.tsx";
 import { FieldPrice } from './utils/FieldPrice.tsx';
+import { Gift } from '../models/Gift.ts';
 
 interface CheckoutProps {
     product: Gift;
