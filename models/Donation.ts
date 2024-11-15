@@ -16,6 +16,7 @@ export interface BaseDonation{
     donor: {
         name: string;
         phone: string;
+        document?: string;
     },
     message: string;
     amount: number;
@@ -54,6 +55,14 @@ export interface CreatePixDonationDto extends BaseCreateDonationDto {
 
 export interface CreateCreditCardDonationDto extends BaseCreateDonationDto {
     type: DonationType.CREDIT_CARD;
+
+    qtdInstallments: number;
+
+    donor: {
+        document: string;
+        name: string;
+        phone: string;
+    }
 
     cardInfo: {
         ccv: string;

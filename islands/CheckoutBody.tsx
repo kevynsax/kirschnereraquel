@@ -49,7 +49,7 @@ export const CheckoutBody = (props: CheckoutProps) => {
                 </div>
 
                 <div className="card-info">
-                    <span>Pode usar esses cartões aqui</span>
+                    <span>Pode usar esses cartões</span>
                     <img src="/icon/cards.svg" alt="" />
                 </div>
             </div>

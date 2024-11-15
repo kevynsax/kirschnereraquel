@@ -10,6 +10,7 @@ import {
     DonationStatus,
     DonationType
 } from '../models/Donation.ts';
+import { createPayment, CreditCardInfo } from './paymentCreditCard.ts';
 
 
 const db = getCollection<Donation>('donations');
@@ -52,8 +53,6 @@ export const createDonation = (payload: CreateDonationDto, origin: string): Prom
 const createPixDonation = async (payload: CreatePixDonationDto, origin: string): Promise<Donation> => {
     const gift = await getGift(payload.giftId);
 
-    const id = crypto.randomUUID();
-
     const qrCode = Pix({
         version: '01',
         key: 'raquelekirschner2024@gmail.com',
@@ -64,7 +63,7 @@ const createPixDonation = async (payload: CreatePixDonationDto, origin: string):
     })
 
     const donation: Donation = {
-        id,
+        id: crypto.randomUUID(),
         gift,
         donor: {
             name: payload.donor.name,
@@ -90,6 +89,40 @@ const createPixDonation = async (payload: CreatePixDonationDto, origin: string):
     return donation;
 }
 
-const createCreditCardDonation = async (payload: CreateCreditCardDonationDto): Promise<Donation> => {
-    throw new Error('not implemented')
+const createCreditCardDonation = async (payload: CreateCreditCardDonationDto, origin: string, remoteIp: string): Promise<Donation> => {
+    const donation: Donation = {
+        id: crypto.randomUUID(),
+        gift: await getGift(payload.giftId),
+        donor: {
+            name: payload.donor.name,
+            phone: payload.donor.phone,
+            document: payload.donor.document,
+        },
+        message: payload.message,
+        amount: payload.amount,
+        status: DonationStatus.PENDING,
+        type: DonationType.CREDIT_CARD,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        qtdInstallments: payload.qtdInstallments,
+    }
+
+    await db.set(donation);
+
+    const message: string = 'Someone made a donation using credit card. You can see in the link: ' + origin + '/donation/' + donation.id;
+    const phoneNumber = '11934721092';
+
+    if(!origin.includes('localhost'))
+        await sendSms(phoneNumber, message);
+
+    const info: CreditCardInfo = {
+        remoteIp,
+        creditCard: {
+            ccv: payload.cardInfo.ccv,
+            expiration: payload.cardInfo.expiration,
+            number: payload.cardInfo.number,
+        }
+    }
+
+    await createPayment(donation, info);
 }
