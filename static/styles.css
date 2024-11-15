@@ -6,6 +6,8 @@
     --light-font-color: white;
     --primary-font-color: #6E5B9A;
 
+    --color-icon-button-hover: #ebe4fa;
+
     --main-font: 'Roboto', sans-serif;
     --secondary-font: 'Sour Gummy', sans-serif;
     --third-font: 'Playwrite BE VLG', cursive;
@@ -75,15 +77,126 @@ html, body {
     }
 }
 
-.field{
-    .label{
+
+@keyframes lds-ring {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+.loading {
+    .lds-ring,
+    .lds-ring div {
+        box-sizing: border-box;
+    }
+
+    .lds-ring {
+        display: inline-block;
+        position: relative;
+        width: 80px;
+        height: 80px;
+    }
+
+    .lds-ring div {
+        box-sizing: border-box;
+        display: block;
+        position: absolute;
+        width: 64px;
+        height: 64px;
+        margin: 8px;
+        border: 8px solid currentColor;
+        border-radius: 50%;
+        animation: lds-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+        border-color: currentColor transparent transparent transparent;
+    }
+
+    .lds-ring div:nth-child(1) {
+        animation-delay: -0.45s;
+    }
+
+    .lds-ring div:nth-child(2) {
+        animation-delay: -0.3s;
+    }
+
+    .lds-ring div:nth-child(3) {
+        animation-delay: -0.15s;
+    }
+}
+
+.iconButton {
+
+    cursor: pointer;
+
+    @media (prefers-color-scheme: dark) {
+        img {
+            filter: invert(0.7);
+        }
+    }
+
+    &.default {
+        padding: 8px;
+
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        text-align: center;
+
+        background-color: transparent;
+        transition: background-color 0.3s;
+
+        img {
+            position: relative;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        &:hover:not(.disabled) {
+            background-color: var(--color-icon-button-hover);
+        }
+    }
+
+    &.slim {
+        padding: 0 8px;
+        line-height: 0;
+
+        &:hover img {
+            filter: invert(0.4);
+        }
+    }
+
+    &.normal {
+        img {
+            width: 16px;
+        }
+    }
+
+    &.big {
+        img {
+            width: 24px;
+        }
+    }
+
+    &.disabled {
+        img {
+            filter: invert(0.4);
+        }
+
+        cursor: default;
+    }
+}
+
+.field {
+    .label {
         font-weight: 500;
         margin-bottom: 8px;
         display: block;
 
     }
 
-    .input{
+    .input {
         display: flex;
         align-items: center;
 
@@ -94,7 +207,7 @@ html, body {
         padding: 8px;
         width: calc(100% - 16px);
 
-        .prefix{
+        .prefix {
             margin-right: 8px;
             font-size: .8rem;
             font-weight: bold;
@@ -108,15 +221,36 @@ html, body {
             font-family: var(--fourth-font), sans-serif;
             font-size: .9em;
 
-            &::placeholder{
+            &::placeholder {
                 color: var(--dark-primary-color);
             }
         }
 
-        &:focus-within{
+        &:focus-within {
             border-color: var(--primary-color);
         }
 
+    }
+}
+
+.snack {
+    font-size: .9rem;
+    position: absolute;
+    bottom: 4px;
+    left: 50%;
+    padding: 4px 16px;
+    background: lightgray;
+    border-radius: 24px;
+
+    opacity: 0;
+    transform: translate(-50%, 150%) scale(0.8);
+
+    transition-property: transform, opacity;
+    transition-duration: .2s;
+
+    &.show {
+        opacity: 1;
+        transform: translate(-50%, 0) scale(1);
     }
 }
 
@@ -431,48 +565,48 @@ html, body {
         }
     }
 
-    .gifts{
+    .gifts {
         text-align: center;
         margin-bottom: 32px;
 
-        h1{
+        h1 {
             margin: 0;
         }
 
-        .products{
+        .products {
             display: flex;
             justify-content: center;
             flex-wrap: wrap;
 
             padding: 32px;
 
-            .product{
+            .product {
                 max-width: 210px;
                 margin: 24px;
 
-                span{
+                span {
                     text-align: left;
                     display: block;
 
-                    &.name{
+                    &.name {
                         font-weight: bold;
                     }
 
-                    &.price{
+                    &.price {
                         margin-bottom: 8px;
 
                         font-weight: 300;
                     }
                 }
 
-                .button{
+                .button {
                     margin-left: 0;
                     width: 100%;
                 }
 
-                img{
+                img {
                     width: 100%;
-                    border: 1px solid rgba(.3,.3,.3,.1);
+                    border: 1px solid rgba(.3, .3, .3, .1);
 
                     object-fit: cover;
                     object-position: 50% 50%;
@@ -502,26 +636,26 @@ html, body {
             }
         }
 
-        .banner{
+        .banner {
             padding: 16px;
 
-            .date{
+            .date {
                 font-size: 2rem;
             }
 
-            .name{
+            .name {
                 font-size: 1.3rem;
             }
         }
 
-        .cover{
+        .cover {
             height: 180px;
 
-            img{
+            img {
                 height: 180px;
             }
 
-            .timings{
+            .timings {
                 height: 180px;
 
                 .timing {
@@ -539,7 +673,7 @@ html, body {
             }
         }
 
-        .place{
+        .place {
             padding: 24px;
 
             .card-place {
@@ -579,11 +713,11 @@ html, body {
                         }
                     }
 
-                    .actions{
+                    .actions {
                         margin-left: 0;
                         margin-top: 24px;
 
-                        >*:first-child {
+                        > *:first-child {
                             margin-left: 0;
                         }
                     }
@@ -591,17 +725,18 @@ html, body {
             }
         }
 
-        .mural{
+        .mural {
             padding: 24px;
             margin-bottom: 0;
 
-            .title{
+            .title {
                 font-size: 2rem;
             }
 
-            .posts{
+            .posts {
                 flex-direction: column;
-                .post, .newPost{
+
+                .post, .newPost {
                     width: unset;
 
                     /*padding: 0;*/
@@ -612,103 +747,177 @@ html, body {
     }
 }
 
-.checkout{
-    >* {
+.checkout {
+    > * {
         display: flex;
         justify-content: center;
     }
 
-    .app-bar{
+    .app-bar {
         width: 100vw;
         padding: 16px 0;
 
-        .content{
+        .content {
             width: 1024px;
         }
     }
 
-    .warning{
+    .warning {
         background: #e3e3e3;
         color: var(--font-color);
         font-weight: 100;
         padding: 16px 0;
         font-size: .9rem;
 
-        a{
+        a {
             color: var(--font-color);
             text-decoration: none;
             font-weight: 400;
-            margin:  0 4px;
+            margin: 0 4px;
         }
     }
 
-    .form, .summary{
+    .form, .summary, .newDonation {
         width: 400px;
     }
 
-    .form{
+    .form, .newDonation {
         padding: 32px;
         background-color: white;
         margin: 24px;
         border-radius: 8px;
 
-        box-shadow: 0 0 10px 0 rgba(0,0,0,.3);
+        box-shadow: 0 0 10px 0 rgba(0, 0, 0, .3);
 
-        .title{
+        &.isLoading {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .title {
             font-size: 1.5rem;
             font-weight: bold;
             margin-bottom: 16px;
         }
 
-        .action{
+        .action {
             width: 100%;
         }
 
-        .payment-option{
+        .payment-option {
             display: flex;
             align-items: center;
 
             padding: 24px 16px;
             cursor: pointer;
 
-            &:hover{
+            &:hover {
                 background: #f9f9f9;
             }
 
-            .icon img{
+            .icon img {
                 width: 32px;
             }
 
             .text {
                 padding-left: 24px;
                 flex-grow: 1;
+
                 span {
                     display: block;
 
-                    &:first-child{
+                    &:first-child {
                         font-weight: bold;
                     }
-                    &:last-child{
+
+                    &:last-child {
                         font-weight: 300;
                         font-size: .9rem;
                     }
                 }
             }
 
-            .suffix img{
+            .suffix img {
                 width: 88px;
             }
         }
     }
 
-    .summary{
+    .newDonation {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+
+        position: relative;
+
+        max-width: 400px;
+
+        .pix {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 16px 0;
+        }
+
+        .pix-message {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+
+            max-width: 100%;
+            text-wrap: nowrap;
+
+            margin: 16px;
+
+            span:first-child{
+                margin-bottom: 16px;
+            }
+
+            span:nth-child(2) {
+                font-weight: bold;
+                margin-bottom: 8px;
+            }
+
+            .pix-code {
+                font-size: .9rem;
+                font-weight: 300;
+                background: var(--color-icon-button-hover);
+                padding: 8px;
+                border-radius: 8px;
+
+                overflow: auto;
+
+                max-width: 100%;
+            }
+
+            button {
+                margin-top: 16px;
+            }
+        }
+
+        .success {
+            padding: 40px;
+            background: green;
+            border-radius: 50%;
+            margin-bottom: 24px;
+
+            img {
+                width: 60px;
+            }
+        }
+    }
+
+    .summary {
         padding: 32px;
-        .header{
+
+        .header {
             display: flex;
             align-items: start;
             padding: 24px 0;
 
-            .title{
+            .title {
                 font-size: 1.3rem;
                 font-weight: bold;
                 margin-bottom: 16px;
@@ -717,34 +926,34 @@ html, body {
             }
         }
 
-        .product{
+        .product {
             display: flex;
             align-items: center;
             padding: 16px 0;
 
-            .name{
+            .name {
                 flex-grow: 1;
                 color: gray;
                 font-weight: 400;
             }
 
-            .price{
+            .price {
                 font-weight: 300;
                 max-width: 110px;
             }
         }
 
-        .total{
+        .total {
             display: flex;
             justify-content: space-between;
             align-items: center;
             padding: 16px 0;
-            border-top: 1px solid rgba(0,0,0,.1);
+            border-top: 1px solid rgba(0, 0, 0, .1);
 
             font-weight: bold;
         }
 
-        .card-info{
+        .card-info {
             display: flex;
             align-items: center;
             justify-content: space-between;
@@ -752,12 +961,12 @@ html, body {
             background: #e6e6e6;
             border-radius: 8px;
 
-            img{
+            img {
                 width: 120px;
             }
         }
 
-        .header .avatar img, .product img{
+        .header .avatar img, .product img {
             width: 50px;
             height: 50px;
             border-radius: 50%;

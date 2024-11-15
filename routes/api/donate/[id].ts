@@ -1,5 +1,5 @@
 import { FreshContext, Handlers } from "$fresh/server.ts";
-import { markPixAsReceived } from '../../../services/donation.ts';
+import { getDonation, markPixAsReceived } from '../../../services/donation.ts';
 
 interface MarkAsReceivedPayload{
     password: string;
@@ -7,6 +7,13 @@ interface MarkAsReceivedPayload{
 }
 
 export const handler: Handlers = {
+    async GET(_req: Request, _ctx: FreshContext): Promise<Response> {
+        const id = _ctx.params.id;
+
+        const result = await getDonation(id);
+
+        return new Response(JSON.stringify(result));
+    },
     async PUT(_req: Request, _ctx: FreshContext): Promise<Response> {
         const form = await _req.json() as MarkAsReceivedPayload;
 
@@ -15,8 +22,8 @@ export const handler: Handlers = {
 
             return new Response('ok');
         }catch (err) {
-            return new Response(err.message, { status: 400 });
+            return new Response((err as any).message, { status: 400 });
         }
-    }
+    },
 
 }

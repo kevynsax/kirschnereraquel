@@ -12,6 +12,7 @@ import * as $api_mural_index from "./routes/api/mural/index.ts";
 import * as $checkout_id_ from "./routes/checkout/[id].tsx";
 import * as $donation_id_ from "./routes/donation/[id].tsx";
 import * as $index from "./routes/index.tsx";
+import * as $pix from "./routes/pix.tsx";
 import * as $CheckoutBody from "./islands/CheckoutBody.tsx";
 import * as $Counter from "./islands/Counter.tsx";
 import * as $DonationDetailed from "./islands/DonationDetailed.tsx";
@@ -25,6 +26,7 @@ import * as $utils_Field from "./islands/utils/Field.tsx";
 import * as $utils_FieldMasked from "./islands/utils/FieldMasked.tsx";
 import * as $utils_FieldPhoneNumber from "./islands/utils/FieldPhoneNumber.tsx";
 import * as $utils_FieldPrice from "./islands/utils/FieldPrice.tsx";
+import * as $utils_QrCode from "./islands/utils/QrCode.tsx";
 import type { Manifest } from "$fresh/server.ts";
 
 const manifest = {
@@ -39,6 +41,7 @@ const manifest = {
     "./routes/checkout/[id].tsx": $checkout_id_,
     "./routes/donation/[id].tsx": $donation_id_,
     "./routes/index.tsx": $index,
+    "./routes/pix.tsx": $pix,
   },
   islands: {
     "./islands/CheckoutBody.tsx": $CheckoutBody,
@@ -54,6 +57,7 @@ const manifest = {
     "./islands/utils/FieldMasked.tsx": $utils_FieldMasked,
     "./islands/utils/FieldPhoneNumber.tsx": $utils_FieldPhoneNumber,
     "./islands/utils/FieldPrice.tsx": $utils_FieldPrice,
+    "./islands/utils/QrCode.tsx": $utils_QrCode,
   },
   baseUrl: import.meta.url,
 } satisfies Manifest;

@@ -1,23 +1,5 @@
 import { getCollection } from './database.ts';
-
-export interface CreateGiftDto {
-    name: string;
-    price: number;
-    image: string;
-}
-
-export interface Gift {
-    id: string;
-    name: string;
-    price: number;
-    image: string;
-    createdAt: Date;
-    deletedAt?: Date;
-}
-
-export interface GiftWithStock extends Gift {
-    alreadyBought: number;
-}
+import { CreateGiftDto, Gift } from '../models/Gift.ts';
 
 const db = getCollection<Gift>('gifts');
 

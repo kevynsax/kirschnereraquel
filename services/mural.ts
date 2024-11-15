@@ -1,18 +1,6 @@
 import { getCollection } from "./database.ts";
 import { resetProducts } from "./gifts.ts";
-
-export interface CreatePostDto {
-    message: string;
-    author: string;
-}
-
-export interface Post {
-    id: string;
-    message: string;
-    author: string;
-    createdAt: Date;
-    deletedAt?: Date;
-}
+import { CreatePostDto, Post } from '../models/Post.ts';
 
 const db = getCollection<Post>("mural");
 

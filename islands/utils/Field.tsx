@@ -1,5 +1,4 @@
 import { useEffect, useState, useCallback, useRef } from "preact/hooks";
-import { createRef } from "preact";
 
 interface FieldProps{
     label?: string;
@@ -13,7 +12,7 @@ interface FieldProps{
 }
 
 export const Field = (props: FieldProps) => {
-    const inputRef = useRef<HTMLInputElement>()
+    const inputRef = useRef<HTMLInputElement>(null)
     const [val, setVal] = useState(props.value);
 
     useEffect(() => {

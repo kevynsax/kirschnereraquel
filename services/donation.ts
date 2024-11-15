@@ -1,72 +1,16 @@
 import { getCollection } from './database.ts';
-import { getGift, Gift } from './gifts.ts';
+import { getGift } from './gifts.ts';
 import { sendSms } from './smsService.ts';
-import Pix from './pix.ts';
+import { QrCodePix as Pix } from 'npm:qrcode-pix';
+import {
+    CreateCreditCardDonationDto,
+    CreateDonationDto,
+    CreatePixDonationDto,
+    Donation,
+    DonationStatus,
+    DonationType
+} from '../models/Donation.ts';
 
-export enum DonationStatus{
-    PENDING = 'pending',
-    PAID = 'paid',
-}
-
-export enum DonationType{
-    PIX = 'pix',
-    CREDIT_CARD = 'credit_card',
-}
-
-export interface BaseDonation{
-    id: string;
-    gift: Gift;
-    donor: {
-        name: string;
-        phone: string;
-    },
-    message: string;
-    amount: number;
-    status: DonationStatus;
-    type: DonationType;
-    createdAt: Date;
-    updatedAt: Date;
-}
-
-export interface PixDonation extends BaseDonation{
-    type: DonationType.PIX;
-    pixQrCode: string;
-}
-
-export interface CreditCardDonation extends BaseDonation{
-    type: DonationType.CREDIT_CARD;
-    qtdInstallments: number;
-}
-
-export type Donation = PixDonation | CreditCardDonation;
-
-export interface BaseCreateDonationDto{
-    giftId: string;
-    donor: {
-        name: string;
-        phone: string;
-    },
-    message: string;
-    amount: number;
-    type: DonationType;
-}
-
-export interface CreatePixDonationDto extends BaseCreateDonationDto {
-    type: DonationType.PIX;
-}
-
-export interface CreateCreditCardDonationDto extends BaseCreateDonationDto {
-    type: DonationType.CREDIT_CARD;
-
-    cardInfo: {
-        ccv: string;
-        number: string;
-        expiration: string;
-        nameOnTheCard: string;
-    }
-}
-
-export type CreateDonationDto = CreatePixDonationDto | CreateCreditCardDonationDto;
 
 const db = getCollection<Donation>('donations');
 
@@ -91,6 +35,9 @@ export const markPixAsReceived = async (id: string, password: string): Promise<v
     donation.updatedAt = new Date();
 
     await db.set(donation);
+
+    const message = 'Pagamento recebido com sucesso! Agradecemos de coração pelo presente para o casamento de Raquel e Kirschner. Seu carinho e generosidade tornam esse momento ainda mais especial.';
+    await sendSms(donation.donor.phone, message);
 }
 
 export const createDonation = (payload: CreateDonationDto, origin: string): Promise<Donation> => {
@@ -107,13 +54,13 @@ const createPixDonation = async (payload: CreatePixDonationDto, origin: string):
 
     const id = crypto.randomUUID();
 
-    const qrCode = new Pix({
-        pixKey: "raquelekirschner2024@gmail.com",
-        description: 'Presente casamento - ' + gift.name,
-        merchantName: 'Kirschner Klava',
-        merchantCity: 'Brasilia',
-        txId: 'txId-' + id,
-        amount: payload.amount
+    const qrCode = Pix({
+        version: '01',
+        key: 'raquelekirschner2024@gmail.com',
+        message: 'Presente casamento - ',
+        name: 'Kirschner Klava',
+        city: 'Brasilia',
+        value: payload.amount,
     })
 
     const donation: Donation = {
@@ -129,13 +76,14 @@ const createPixDonation = async (payload: CreatePixDonationDto, origin: string):
         type: DonationType.PIX,
         createdAt: new Date(),
         updatedAt: new Date(),
-        pixQrCode: qrCode.getPayload(),
+        pixQrCode: qrCode.payload(),
     };
 
     const message: string = 'Someone made a donation using pix. Please hurry to approve in the link: ' + origin + '/donation/' + donation.id;
     const phoneNumber = '11934721092'
 
-    await sendSms(phoneNumber, message);
+    if(!origin.includes('localhost'))
+        await sendSms(phoneNumber, message);
 
     await db.set(donation);
 

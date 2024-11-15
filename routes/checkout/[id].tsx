@@ -17,7 +17,6 @@ export const handler: Handlers = {
 };
 
 export default function Checkout(props: PageProps<{ product: Gift }>) {
-
     return (
         <div className="checkout">
             <div className="app-bar">
