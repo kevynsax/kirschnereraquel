@@ -1,41 +1,15 @@
 import { getCollection } from './database.ts';
-import { CreateGiftDto, Gift } from '../models/Gift.ts';
+import { CreateGiftDto, Gift, GiftWithStock } from '../models/Gift.ts';
+import { defaultGifts } from './constants.ts';
+import { lstDonations } from './donation.ts';
 
 const db = getCollection<Gift>('gifts');
+
 
 export const resetProducts = async () => {
     await db.clean();
 
-    const products: Gift[] = [
-        {
-            id: crypto.randomUUID(),
-            name: 'Furadeira',
-            price: 210.31,
-            image: '/gifts/furadeira.png',
-            createdAt: new Date()
-        },
-        {
-            id: crypto.randomUUID(),
-            name: 'Banquetas',
-            price: 260,
-            image: '/gifts/chair.png',
-            createdAt: new Date()
-        },
-        {
-            id: crypto.randomUUID(),
-            name: 'Chave de ferramenta',
-            price: 200,
-            image: '/gifts/caixa-de-ferramenta.png',
-            createdAt: new Date()
-        },
-        {
-            id: crypto.randomUUID(),
-            name: 'Kit utensílios de churrasco',
-            price: 238.99,
-            image: '/gifts/utensilio-churrasco.png',
-            createdAt: new Date()
-        }
-    ];
+    const products: Gift[] = [...defaultGifts];
 
     for(const product of products) {
         await db.set(product);
@@ -52,17 +26,36 @@ export const getGift = async (id: string): Promise<Gift> => {
     return gift;
 }
 
-export const listAllGifts = async (): Promise<Gift[]> => {
+export const listAllGifts = async (): Promise<GiftWithStock[]> => {
     const result = await db.list();
-    return result.filter(x => !x.deletedAt);
+    const lst = result.filter(x => !x.deletedAt);
+
+    const purchases = await lstDonations();
+
+    const dicPurchase = new Map<string, number>();
+
+    for(const purchase of purchases) {
+        const key = purchase.gift.id;
+        dicPurchase.set(key, (dicPurchase.get(key) || 0) + 1);
+    }
+
+    return lst.map(x => {
+        const availableQuotas = x.qtyQuotas - (dicPurchase.get(x.id) || 0);
+        return {
+            ...x,
+            availableQuotas,
+        }
+    });
 };
 
 export const createGift = async (dto: CreateGiftDto): Promise<Gift> => {
     const newGift: Gift = {
         id: crypto.randomUUID(),
         name: dto.name,
+        description: dto.description,
         price: dto.price,
         image: dto.image,
+        qtyQuotas: dto.qtyQuotas,
         createdAt: new Date(),
     }
 

@@ -1,5 +1,5 @@
-import { Gift } from '../services/gifts.ts';
 import { Button } from '../components/Button.tsx';
+import { Gift } from "../models/Gift.ts";
 
 
 const formatter = new Intl.NumberFormat('pt-BR', {style: 'currency', currency: 'BRL'});
@@ -20,7 +20,6 @@ export const Gifts = (props: Props) => {
                         <span className="name">{product.name}</span>
                         <span className="price">{formatter.format(product.price)}</span>
                         <Button onClick={() => window.location.href = `checkout/${product.id}`}>Presentear</Button>
-
                     </div>
                 ))}
             </div>

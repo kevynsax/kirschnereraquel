@@ -10,7 +10,7 @@ import {
     DonationStatus,
     DonationType
 } from '../models/Donation.ts';
-import { createPayment, CreditCardInfo } from './paymentCreditCard.ts';
+import { createPayment } from './paymentCreditCard.ts';
 
 
 const db = getCollection<Donation>('donations');
@@ -23,6 +23,10 @@ export const getDonation = async (id: string): Promise<Donation> => {
     }
 
     return result;
+}
+
+export const lstDonations = async (): Promise<Donation[]> => {
+    return await db.list();
 }
 
 export const markPixAsReceived = async (id: string, password: string): Promise<void> => {
