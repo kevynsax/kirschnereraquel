@@ -37,6 +37,10 @@ export const markPixAsReceived = async (id: string, password: string): Promise<v
 
     await db.set(donation);
 
+    await sendClientMessage(donation);
+}
+
+const sendClientMessage = async (donation: Donation): Promise<void> => {
     const message = 'Pagamento recebido com sucesso! Agradecemos de coração pelo presente para o casamento de Raquel e Kirschner. Seu carinho e generosidade tornam esse momento ainda mais especial.';
     await sendSms(donation.donor.phone, message);
 }
@@ -120,6 +124,8 @@ const createCreditCardDonation = async (payload: CreateCreditCardDonationDto, or
     donation.status = DonationStatus.PAID;
     donation.updatedAt = new Date();
     await db.set(donation);
+
+    await sendClientMessage(donation);
 
     return donation;
 }
