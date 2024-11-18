@@ -41,13 +41,13 @@ export const markPixAsReceived = async (id: string, password: string): Promise<v
     await sendSms(donation.donor.phone, message);
 }
 
-export const createDonation = (payload: CreateDonationDto, origin: string): Promise<Donation> => {
+export const createDonation = (payload: CreateDonationDto, origin: string, remoteIp: string): Promise<Donation> => {
     const handler  = {
         [DonationType.PIX]: createPixDonation,
         [DonationType.CREDIT_CARD]: createCreditCardDonation,
     }[payload.type]!;
 
-    return handler(payload as any, origin);
+    return handler(payload as any, origin, remoteIp);
 }
 
 const createPixDonation = async (payload: CreatePixDonationDto, origin: string): Promise<Donation> => {
@@ -125,4 +125,8 @@ const createCreditCardDonation = async (payload: CreateCreditCardDonationDto, or
     }
 
     await createPayment(donation, info);
+
+    donation.status = DonationStatus.PAID;
+    donation.updatedAt = new Date();
+    await db.set(donation);
 }

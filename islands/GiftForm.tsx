@@ -134,7 +134,7 @@ export const GiftForm = (props: Props) => {
                     </div>
                 </div>
 
-                <div className="payment-option">
+                <div className="payment-option" onClick={increaseStep}>
                     <div className="icon">
                         <img src="/icon/card.svg" />
                     </div>
@@ -148,6 +148,14 @@ export const GiftForm = (props: Props) => {
                 </div>
             </div>
         );
+    }
+
+    if(step === 2) {
+        return (
+            <div className="form">
+                <div className="title">Dados do cartão</div>
+            </div>
+        )
     }
 
     return (
