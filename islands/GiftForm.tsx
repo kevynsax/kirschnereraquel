@@ -1,14 +1,21 @@
-import { Field } from './utils/Field.tsx';
-import { useCallback, useState } from 'preact/hooks';
-import { Button } from '../components/Button.tsx';
-import { FieldPhoneNumber } from './utils/FieldPhoneNumber.tsx';
-import { Loading } from '../components/Loading.tsx';
-import { QrCode } from './utils/QrCode.tsx';
-import { SnackBar } from '../components/SnackBar.tsx';
-import { Gift } from '../models/Gift.ts';
-import { Donation, DonationStatus, PixDonation, } from '../models/Donation.ts';
-import { FieldMasked } from './utils/FieldMasked.tsx';
-import { FieldCardNumber } from './utils/FieldCardNumber.tsx';
+import { Field } from "./utils/Field.tsx";
+import { useCallback, useState } from "preact/hooks";
+import { Button } from "../components/Button.tsx";
+import { FieldPhoneNumber } from "./utils/FieldPhoneNumber.tsx";
+import { Loading } from "../components/Loading.tsx";
+import { QrCode } from "./utils/QrCode.tsx";
+import { SnackBar } from "../components/SnackBar.tsx";
+import { Gift } from "../models/Gift.ts";
+import {
+    CreateCreditCardDonationDto,
+    CreatePixDonationDto,
+    Donation,
+    DonationStatus,
+    DonationType,
+    PixDonation,
+} from "../models/Donation.ts";
+import { FieldMasked } from "./utils/FieldMasked.tsx";
+import { FieldCardNumber } from "./utils/FieldCardNumber.tsx";
 
 interface Props {
     product: Gift;
@@ -19,6 +26,7 @@ interface Props {
 const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
 export const GiftForm = (props: Props) => {
+    const [error, setError] = useState("");
     const [name, setName] = useState("");
     const [phone, setPhone] = useState("");
     const [message, setMessage] = useState("");
@@ -31,7 +39,7 @@ export const GiftForm = (props: Props) => {
 
     const [newDonation, setNewDonation] = useState<Donation | null>(null);
 
-    const [step, setStep] = useState(2);
+    const [step, setStep] = useState(0);
     const [isLoading, setIsLoading] = useState(false);
 
     const increaseStep = useCallback(() => {
@@ -53,15 +61,17 @@ export const GiftForm = (props: Props) => {
 
     const createPixDonation = async () => {
         setIsLoading(true);
+        const payload: CreatePixDonationDto = {
+            giftId: props.product.id,
+            donor: { name, phone },
+            message,
+            amount: props.price,
+            type: DonationType.PIX,
+        };
+
         const req = await fetch("/api/donate", {
             method: "POST",
-            body: JSON.stringify({
-                giftId: props.product.id,
-                donor: { name, phone },
-                message,
-                amount: props.price,
-                type: "pix",
-            }),
+            body: JSON.stringify(payload),
             headers: {
                 "Content-Type": "application/json",
             },
@@ -75,7 +85,55 @@ export const GiftForm = (props: Props) => {
         return keepUpdatingUntilIsPaid(donation.id);
     };
 
-    const isDisabled = !name || !phone;
+    const createCardDonation = async () => {
+        setIsLoading(true);
+        const payload: CreateCreditCardDonationDto = {
+            giftId: props.product.id,
+            donor: { name, phone },
+            message,
+            amount: props.price,
+            type: DonationType.CREDIT_CARD,
+            payerInfo: {
+                document,
+                name: cardName,
+            },
+            cardInfo: {
+                number: cardNumber,
+                expiration: cardExpiration,
+                ccv: cardCvv,
+            },
+            qtdInstallments: 1,
+        };
+
+        const req = await fetch("/api/donate", {
+            method: "POST",
+            body: JSON.stringify(payload),
+            headers: {
+                "Content-Type": "application/json",
+            },
+        })
+            .catch(error => {
+                setError(error.message);
+                throw error;
+            })
+            .finally(() => setIsLoading(false));
+
+        if(req.status !== 200){
+            const error = await req.json();
+            setError(error.message);
+            return;
+        }
+
+        const donation = await req.json();
+
+        props.onFormWasSent();
+        setNewDonation(donation);
+    };
+
+    const isDisabled = !name || !phone ||
+        (step === 2 &&
+            (!cardNumber || !cardName || !cardExpiration || !cardCvv ||
+                !document));
 
     if (newDonation) {
         return <NewlyCreatedDonation data={newDonation} />;
@@ -158,32 +216,34 @@ export const GiftForm = (props: Props) => {
         );
     }
 
-    if(step === 2) {
+    if (step === 2) {
         return (
             <div className="form">
+                {error && <div className="error">{error}</div>}
                 <div className="title">Dados do cartão</div>
                 <FieldCardNumber
                     value={cardNumber}
                     onChange={setCardNumber}
                 />
 
-                <div className='card-details'>
-                <FieldMasked
-                    label="Validade"
-                    placeholder="MM/AA"
-                    value={cardExpiration}
-                    onChange={setCardExpiration}
-                    formatter={(val) => val.replace(/(\d{2})(\d{2})/, "$1/$2")}
-                    validator={(val) => val.length === 5}
-                />
-                <FieldMasked
-                    label="CVV"
-                    placeholder="123"
-                    value={cardCvv}
-                    onChange={setCardCvv}
-                    formatter={(val) => val.replace(/\D/g, "")}
-                    validator={(val) => val.length === 3}
-                />
+                <div className="card-details">
+                    <FieldMasked
+                        label="Validade"
+                        placeholder="MM/AA"
+                        value={cardExpiration}
+                        onChange={setCardExpiration}
+                        formatter={(val) =>
+                            val.replace(/(\d{2})(\d{2})/, "$1/$2")}
+                        validator={(val) => val.length === 5}
+                    />
+                    <FieldMasked
+                        label="CVV"
+                        placeholder="123"
+                        value={cardCvv}
+                        onChange={setCardCvv}
+                        formatter={(val) => val.replace(/\D/g, "")}
+                        validator={(val) => val.length === 3}
+                    />
                 </div>
                 <Field
                     label="Nome impresso no cartão"
@@ -192,15 +252,26 @@ export const GiftForm = (props: Props) => {
                     onChange={setCardName}
                 />
                 <FieldMasked
-                    label='CPF'
-                    placeholder='000.000.000-00'
+                    label="CPF"
+                    placeholder="000.000.000-00"
                     value={document}
                     onChange={setDocument}
-                    formatter={(val) => val.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, "$1.$2.$3-$4")}
+                    formatter={(val) =>
+                        val.replace(
+                            /(\d{3})(\d{3})(\d{3})(\d{2})/,
+                            "$1.$2.$3-$4",
+                        )}
                     validator={(val) => val.length === 14}
                 />
+                <Button
+                    onClick={createCardDonation}
+                    disabled={isDisabled}
+                    class="action"
+                >
+                    Confirmar pagamento
+                </Button>
             </div>
-        )
+        );
     }
 
     return (

@@ -807,6 +807,16 @@ html, body {
     }
 
     .form{
+        .error{
+            background: darkred;
+            color: white;
+            padding: 8px;
+            margin-bottom: 8px;
+            border-radius: 8px;
+            font-size: .9rem;
+            margin-top: 8px;
+        }
+
         .payment-option {
             display: flex;
             align-items: center;

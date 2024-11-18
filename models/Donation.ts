@@ -58,17 +58,15 @@ export interface CreateCreditCardDonationDto extends BaseCreateDonationDto {
 
     qtdInstallments: number;
 
-    donor: {
+    payerInfo: {
         document: string;
         name: string;
-        phone: string;
     }
 
     cardInfo: {
         ccv: string;
         number: string;
         expiration: string;
-        nameOnTheCard: string;
     }
 }
 

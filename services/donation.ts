@@ -94,9 +94,9 @@ const createCreditCardDonation = async (payload: CreateCreditCardDonationDto, or
         id: crypto.randomUUID(),
         gift: await getGift(payload.giftId),
         donor: {
-            name: payload.donor.name,
+            name: payload.payerInfo.name,
             phone: payload.donor.phone,
-            document: payload.donor.document,
+            document: payload.payerInfo.document,
         },
         message: payload.message,
         amount: payload.amount,
@@ -115,18 +115,11 @@ const createCreditCardDonation = async (payload: CreateCreditCardDonationDto, or
     if(!origin.includes('localhost'))
         await sendSms(phoneNumber, message);
 
-    const info: CreditCardInfo = {
-        remoteIp,
-        creditCard: {
-            ccv: payload.cardInfo.ccv,
-            expiration: payload.cardInfo.expiration,
-            number: payload.cardInfo.number,
-        }
-    }
-
-    await createPayment(donation, info);
+    await createPayment(donation, payload, remoteIp);
 
     donation.status = DonationStatus.PAID;
     donation.updatedAt = new Date();
     await db.set(donation);
+
+    return donation;
 }
