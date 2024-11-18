@@ -19,7 +19,7 @@ export const Gifts = (props: Props) => {
                         <img src={product.image} />
                         <span className="name">{product.name}</span>
                         <span className="price">{formatter.format(product.price)}</span>
-                        <Button onClick={() => window.location.href = `checkout/${product.id}`}>Presentear</Button>
+                        <Button>Presentear</Button>
                     </div>
                 ))}
             </div>
