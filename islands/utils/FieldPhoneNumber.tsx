@@ -53,7 +53,7 @@ export const FieldPhoneNumber = (props: Props) => {
         <FieldMasked
             {...props}
             label={props.label || 'Telefone'}
-            placeHolder="(61) 9 8327 3504"
+            placeholder="(61) 9 8327 3504"
             formatter={phoneInputFormatter}
             validator={validPhoneNumber} />
     );

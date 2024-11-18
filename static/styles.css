@@ -804,7 +804,9 @@ html, body {
         .action {
             width: 100%;
         }
+    }
 
+    .form{
         .payment-option {
             display: flex;
             align-items: center;
@@ -840,6 +842,13 @@ html, body {
 
             .suffix img {
                 width: 88px;
+            }
+        }
+
+        .card-details{
+            display: flex;
+            >*:last-child{
+                margin-left: 8px;
             }
         }
     }

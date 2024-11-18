@@ -23,6 +23,7 @@ import * as $Mural from "./islands/Mural.tsx";
 import * as $PostCard from "./islands/PostCard.tsx";
 import * as $repo from "./islands/repo.ts";
 import * as $utils_Field from "./islands/utils/Field.tsx";
+import * as $utils_FieldCardNumber from "./islands/utils/FieldCardNumber.tsx";
 import * as $utils_FieldMasked from "./islands/utils/FieldMasked.tsx";
 import * as $utils_FieldPhoneNumber from "./islands/utils/FieldPhoneNumber.tsx";
 import * as $utils_FieldPrice from "./islands/utils/FieldPrice.tsx";
@@ -54,6 +55,7 @@ const manifest = {
     "./islands/PostCard.tsx": $PostCard,
     "./islands/repo.ts": $repo,
     "./islands/utils/Field.tsx": $utils_Field,
+    "./islands/utils/FieldCardNumber.tsx": $utils_FieldCardNumber,
     "./islands/utils/FieldMasked.tsx": $utils_FieldMasked,
     "./islands/utils/FieldPhoneNumber.tsx": $utils_FieldPhoneNumber,
     "./islands/utils/FieldPrice.tsx": $utils_FieldPrice,

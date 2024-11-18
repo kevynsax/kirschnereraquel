@@ -7,6 +7,8 @@ import { QrCode } from './utils/QrCode.tsx';
 import { SnackBar } from '../components/SnackBar.tsx';
 import { Gift } from '../models/Gift.ts';
 import { Donation, DonationStatus, PixDonation, } from '../models/Donation.ts';
+import { FieldMasked } from './utils/FieldMasked.tsx';
+import { FieldCardNumber } from './utils/FieldCardNumber.tsx';
 
 interface Props {
     product: Gift;
@@ -21,9 +23,15 @@ export const GiftForm = (props: Props) => {
     const [phone, setPhone] = useState("");
     const [message, setMessage] = useState("");
 
+    const [cardNumber, setCardNumber] = useState("");
+    const [cardName, setCardName] = useState("");
+    const [cardExpiration, setCardExpiration] = useState("");
+    const [cardCvv, setCardCvv] = useState("");
+    const [document, setDocument] = useState("");
+
     const [newDonation, setNewDonation] = useState<Donation | null>(null);
 
-    const [step, setStep] = useState(0);
+    const [step, setStep] = useState(2);
     const [isLoading, setIsLoading] = useState(false);
 
     const increaseStep = useCallback(() => {
@@ -154,6 +162,43 @@ export const GiftForm = (props: Props) => {
         return (
             <div className="form">
                 <div className="title">Dados do cartão</div>
+                <FieldCardNumber
+                    value={cardNumber}
+                    onChange={setCardNumber}
+                />
+
+                <div className='card-details'>
+                <FieldMasked
+                    label="Validade"
+                    placeholder="MM/AA"
+                    value={cardExpiration}
+                    onChange={setCardExpiration}
+                    formatter={(val) => val.replace(/(\d{2})(\d{2})/, "$1/$2")}
+                    validator={(val) => val.length === 5}
+                />
+                <FieldMasked
+                    label="CVV"
+                    placeholder="123"
+                    value={cardCvv}
+                    onChange={setCardCvv}
+                    formatter={(val) => val.replace(/\D/g, "")}
+                    validator={(val) => val.length === 3}
+                />
+                </div>
+                <Field
+                    label="Nome impresso no cartão"
+                    placeholder="João da Silva"
+                    value={cardName}
+                    onChange={setCardName}
+                />
+                <FieldMasked
+                    label='CPF'
+                    placeholder='000.000.000-00'
+                    value={document}
+                    onChange={setDocument}
+                    formatter={(val) => val.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, "$1.$2.$3-$4")}
+                    validator={(val) => val.length === 14}
+                />
             </div>
         )
     }

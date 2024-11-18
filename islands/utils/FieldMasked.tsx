@@ -5,7 +5,7 @@ interface Props {
     value?: string;
     onChange: (val: string) => void;
     label: string;
-    placeHolder: string;
+    placeholder: string;
     formatter: (val: string) => string;
     validator: (val: string) => boolean;
     disabled?: boolean;
@@ -40,7 +40,7 @@ export const FieldMasked = (props: Props) => {
     return (
         <Field
             label={props.label}
-            placeholder={props.placeHolder}
+            placeholder={props.placeholder}
             value={val}
             onChange={handleChange}
         />
