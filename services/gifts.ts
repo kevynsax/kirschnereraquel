@@ -2,6 +2,7 @@ import { getCollection } from './database.ts';
 import { CreateGiftDto, Gift, GiftWithStock } from '../models/Gift.ts';
 import { defaultGifts } from './constants.ts';
 import { lstDonations } from './donation.ts';
+import { DonationStatus } from '../models/Donation.ts';
 
 const db = getCollection<Gift>('gifts');
 
@@ -35,6 +36,9 @@ export const listAllGifts = async (): Promise<GiftWithStock[]> => {
     const dicPurchase = new Map<string, number>();
 
     for(const purchase of purchases) {
+        if(purchase.status !== DonationStatus.PAID)
+            continue;
+
         const key = purchase.gift.id;
         dicPurchase.set(key, (dicPurchase.get(key) || 0) + purchase.qtyQuotas);
     }
