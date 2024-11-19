@@ -89,6 +89,8 @@ const createPixDonation = async (payload: CreatePixDonationDto, origin: string):
     const message: string = 'Someone made a donation using pix. Please hurry to approve in the link: ' + origin + '/donation/' + donation.id;
     const phoneNumber = '11934721092'
 
+    console.log(message);
+
     if(!origin.includes('localhost'))
         await sendSms(phoneNumber, message);
 
@@ -119,6 +121,8 @@ const createCreditCardDonation = async (payload: CreateCreditCardDonationDto, or
 
     const message: string = 'Someone made a donation using credit card. You can see in the link: ' + origin + '/donation/' + donation.id;
     const phoneNumber = '11934721092';
+
+    console.log(message);
 
     if(!origin.includes('localhost'))
         await sendSms(phoneNumber, message);

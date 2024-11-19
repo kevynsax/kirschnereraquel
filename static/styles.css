@@ -626,6 +626,16 @@ html, body {
 
                     border-radius: 8px;
                 }
+
+                &.disabled {
+                    span {
+                        color: #aaa;
+                    }
+
+                    img {
+                        filter: saturate(.7) brightness(.5) contrast(.3);
+                    }
+                }
             }
         }
     }

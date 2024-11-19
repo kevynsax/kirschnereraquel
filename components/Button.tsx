@@ -3,6 +3,7 @@ import { IS_BROWSER } from "$fresh/runtime.ts";
 
 interface ButtonProps extends JSX.HTMLAttributes<HTMLButtonElement> {
     prefixImage?: string;
+    disabled?: boolean;
 }
 
 export function Button(props: ButtonProps) {

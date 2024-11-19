@@ -1,12 +1,13 @@
 import Counter from '../islands/Counter.tsx';
 import LocalCard from '../islands/LocalCard.tsx';
 import { FreshContext, PageProps } from "$fresh/server.ts";
-import { listAllPosts, Post } from '../services/mural.ts';
+import { listAllPosts } from '../services/mural.ts';
 import Mural from "../islands/Mural.tsx";
 import { Gifts } from '../islands/Gifts.tsx';
-import App from './_app.tsx';
 import { AppBar } from '../components/AppBar.tsx';
-import { Gift, listAllGifts } from '../services/gifts.ts';
+import { listAllGifts } from '../services/gifts.ts';
+import { GiftWithStock } from '../models/Gift.ts';
+import { Post } from "../models/Post.ts";
 
 export const handler = {
     async GET(_req: Request, _ctx: FreshContext): Promise<Response> {
@@ -19,7 +20,7 @@ export const handler = {
 
 interface Props{
     posts: Post[],
-    products: Gift[]
+    products: GiftWithStock[]
 }
 
 export default function Home(props: PageProps<Props>) {
