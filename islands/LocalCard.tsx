@@ -20,7 +20,7 @@ export default function LocalCard() {
                             <div className="icon">
                                 <img src="/icon/date.svg" />
                             </div>
-                            <span>14 de dezembro de 2024 - 17h00</span>
+                            <span>14 de dezembro de 2024 - 16H30</span>
                         </div>
 
                         <div className="info">
