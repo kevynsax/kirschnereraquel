@@ -238,7 +238,7 @@ const lst: PartialGift[] = [
 ];
 
 export const defaultGifts: Gift[] = lst.map((x, i) => ({
-    id: i.toString(),
+    id: crypto.randomUUID(),
     createdAt: new Date(),
     qtyQuotas: x.qtyQuotas || 1,
     ...x,
