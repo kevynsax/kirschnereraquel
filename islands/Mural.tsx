@@ -1,10 +1,10 @@
-import { Post } from '../services/mural.ts';
 import { PostCard } from './PostCard.tsx';
 import { useSignal } from "@preact/signals";
 import { useState } from 'preact/hooks';
 import { Button } from '../components/Button.tsx';
 import { getLocally, setLocally } from './repo.ts';
 import { Field } from './utils/Field.tsx';
+import { Post } from "../models/Post.ts";
 
 interface MuralProps {
     posts: Post[];

@@ -11,13 +11,15 @@ const linkWhatsapp =
 export const handler: Handlers = {
     async GET(_req: Request, _ctx: FreshContext): Promise<Response> {
         const { id } = _ctx.params;
+
+        const qtyQuotas = _ctx.url.toString().match(/qtyQuotas=(\d+)/)?.[1] || "1";
         const product = await getGift(id);
 
-        return _ctx.render({ product });
+        return _ctx.render({ product, qtyQuotas });
     },
 };
 
-export default function Checkout(props: PageProps<{ product: Gift }>) {
+export default function Checkout(props: PageProps<{ product: Gift, qtyQuotas?: number }>) {
     return (
         <div className="checkout">
             <div className="app-bar">
@@ -37,7 +39,7 @@ export default function Checkout(props: PageProps<{ product: Gift }>) {
             </div>
 
             <div className="body">
-                <CheckoutBody product={props.data.product} />
+                <CheckoutBody product={props.data.product} qtyQuotas={props.data.qtyQuotas} />
             </div>
         </div>
     );

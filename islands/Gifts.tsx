@@ -1,5 +1,6 @@
 import { Button } from "../components/Button.tsx";
 import { GiftWithStock } from "../models/Gift.ts";
+import { useCallback, useState } from "preact/hooks";
 
 const formatter = new Intl.NumberFormat("pt-BR", {
     style: "currency",
@@ -29,30 +30,63 @@ export const Gifts = (props: Props) => {
             </div>
 
             <div className="products">
-                {props.products.map((product) => (
-                    <div
-                        className={`product ${
-                            !product.availableQuotas ? "disabled" : ""
-                        }`}
-                    >
-                        <img src={product.image} />
-                        <span className="name">{product.name}</span>
-                        <span className="description">
-                            {product.description}
-                        </span>
-                        <span className="price">
-                            {formatter.format(product.price)}
-                        </span>
-                        <Button
-                            disabled={!product.availableQuotas}
-                            onClick={() =>
-                                window.location.href = `checkout/${product.id}`}
-                        >
-                            Presentear
-                        </Button>
-                    </div>
-                ))}
+                {props.products.map((product) => {
+                    return <Gift key={product.id} gift={product} />;
+                })}
             </div>
         </div>
     );
 };
+
+const Gift = (props: { gift: GiftWithStock }) => {
+    const [qtyQuotas, setQtyQuotas] = useState(1);
+
+    const increaseQuotas = useCallback(() => {
+        if(qtyQuotas >= props.gift.qtyQuotas)
+            return;
+
+        setQtyQuotas(qtyQuotas + 1);
+    }, [setQtyQuotas, qtyQuotas, props.gift.qtyQuotas]);
+
+    const decreaseQuotas = useCallback(() => {
+        if(qtyQuotas <= 1)
+            return;
+
+        setQtyQuotas(qtyQuotas - 1);
+    }, [setQtyQuotas, qtyQuotas]);
+
+    const increaseIsDisabled = qtyQuotas >= props.gift.qtyQuotas;
+    const decreaseIsDisabled = qtyQuotas <= 1;
+
+    const decreaseStyle = decreaseIsDisabled ? "decrease disabled" : "decrease";
+    const increaseStyle = increaseIsDisabled ? "increase disabled" : "increase";
+
+    const {availableQuotas, ...gift} = props.gift;
+
+    const isDisabled = !availableQuotas;
+    const disabledStyle = isDisabled ? "disabled" : "";
+
+    const price = gift.price * qtyQuotas;
+
+    return (
+        <div className={`product ${disabledStyle}`}>
+            <img src={gift.image} alt={gift.name} />
+            <span className="name">{gift.name}</span>
+            <span className="description">{gift.description}</span>
+            <span className="price">{formatter.format(price)}</span>
+            {gift.qtyQuotas > 1 && !isDisabled && (
+                <div className="quotas">
+                    <div className={decreaseStyle} onClick={decreaseQuotas}>-</div>
+                    <span>{qtyQuotas}</span>
+                    <div className={increaseStyle} onClick={increaseQuotas}>+</div>
+                </div>
+            )}
+            <Button
+                disabled={isDisabled}
+                onClick={() => window.location.href = `checkout/${gift.id}?qtyQuotas=${qtyQuotas}`}
+            >
+                Presentear
+            </Button>
+        </div>
+    );
+}

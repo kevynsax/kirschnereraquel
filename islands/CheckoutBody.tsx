@@ -1,21 +1,27 @@
-import { useState } from "preact/hooks";
 import { GiftForm } from "./GiftForm.tsx";
-import { FieldPrice } from './utils/FieldPrice.tsx';
 import { Gift } from '../models/Gift.ts';
+import { Decimal } from 'npm:decimal.js';
 
 interface CheckoutProps {
     product: Gift;
+    qtyQuotas?: number;
 }
 
 export const CheckoutBody = (props: CheckoutProps) => {
-    const total = new Intl.NumberFormat("pt-BR", {
+    const qtyQuotas = props.qtyQuotas || 1;
+
+    const uniquePrice = props.product.price;
+    const price = new Decimal(uniquePrice).times(qtyQuotas).toNumber();
+    const formatter = new Intl.NumberFormat("pt-BR", {
         style: "currency",
         currency: "BRL",
-    }).format(props.product.price);
+    });
+
+    const total = formatter.format(price);
 
     return (
         <>
-            <GiftForm product={props.product} qtyQuotas={1} />
+            <GiftForm product={props.product} qtyQuotas={qtyQuotas} />
             <div className="summary">
                 <div className="header">
                     <div className="avatar">
@@ -29,7 +35,8 @@ export const CheckoutBody = (props: CheckoutProps) => {
                 <div className="product">
                     <span className="name">{props.product.name}</span>
                     <span className="price">
-                        {total}
+                        {qtyQuotas}x&nbsp;
+                        {formatter.format(uniquePrice)}
                     </span>
                 </div>
 

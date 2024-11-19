@@ -843,6 +843,38 @@ html, body {
                     height: 180px;
                     border: none;
                 }
+
+                .quotas{
+                    display: flex;
+                    justify-content: space-between;
+                    margin: 16px;
+
+                    .increase, .decrease{
+                        background: var(--dark-primary-color);
+
+                        padding: 4px 16px;
+                        border-radius: 4px;
+                        cursor: pointer;
+
+                        transition: background .3s ease-in-out;
+
+                        &:hover{
+                            background: var(--light-primary-color);
+                        }
+
+                        &.disabled{
+                            background: #ccc;
+                            cursor: not-allowed;
+                        }
+                    }
+
+                    span{
+                        text-align: center;
+                        border-radius: 8px;
+                        flex-grow: 1;
+                        border: 1px solid var(--light-primary-color);
+                    }
+                }
             }
         }
     }
