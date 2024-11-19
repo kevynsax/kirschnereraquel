@@ -15,7 +15,7 @@ export const CheckoutBody = (props: CheckoutProps) => {
 
     return (
         <>
-            <GiftForm product={props.product} qtyQuotas={3} />
+            <GiftForm product={props.product} qtyQuotas={1} />
             <div className="summary">
                 <div className="header">
                     <div className="avatar">

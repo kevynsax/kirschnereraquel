@@ -72,7 +72,31 @@ const sendClientMessage = async (donation: Donation): Promise<void> => {
     await sendSms(donation.donor.phone, message);
 }
 
-export const createDonation = (payload: CreateDonationDto, origin: string, remoteIp: string): Promise<Donation> => {
+const validateStock = async (giftId: string, qtyQuotas: number): Promise<void> => {
+    const gift = await getGift(giftId);
+
+    const purchases = await lstDonations();
+
+    const dicPurchase = new Map<string, number>();
+
+    for(const purchase of purchases) {
+        if(purchase.status !== DonationStatus.PAID)
+            continue;
+
+        const key = purchase.gift.id;
+        dicPurchase.set(key, (dicPurchase.get(key) || 0) + purchase.qtyQuotas);
+    }
+
+    const availableQuotas = gift.qtyQuotas - (dicPurchase.get(gift.id) || 0);
+
+    if(availableQuotas < qtyQuotas){
+        throw new Error('Presente já foi comprado! Por favor, escolha outro presente.');
+    }
+}
+
+export const createDonation = async (payload: CreateDonationDto, origin: string, remoteIp: string): Promise<Donation> => {
+    await validateStock(payload.giftId, payload.qtyQuotas);
+
     const handler  = {
         [DonationType.PIX]: createPixDonation,
         [DonationType.CREDIT_CARD]: createCreditCardDonation,

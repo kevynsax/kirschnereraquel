@@ -64,7 +64,7 @@ export const GiftForm = (props: Props) => {
             giftId: props.product.id,
             donor: { name, phone },
             message,
-            amount: props.product.price,
+            qtyQuotas: props.qtyQuotas,
             type: DonationType.PIX,
         };
 
@@ -75,6 +75,12 @@ export const GiftForm = (props: Props) => {
                 "Content-Type": "application/json",
             },
         }).finally(() => setIsLoading(false));
+
+        if(req.status !== 200){
+            const error = await req.json();
+            setError(error.message);
+            return;
+        }
 
         const donation = await req.json();
 
@@ -89,7 +95,7 @@ export const GiftForm = (props: Props) => {
             giftId: props.product.id,
             donor: { name, phone },
             message,
-            amount: props.product.price,
+            qtyQuotas: props.qtyQuotas,
             type: DonationType.CREDIT_CARD,
             payerInfo: {
                 document,
@@ -182,6 +188,7 @@ export const GiftForm = (props: Props) => {
     if (step === 1) {
         return (
             <div className="form">
+                {error && <div className="error">{error}</div>}
                 <div className="title">Selecione o meio de pagamento</div>
 
                 <div
