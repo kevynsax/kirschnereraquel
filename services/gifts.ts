@@ -36,7 +36,7 @@ export const listAllGifts = async (): Promise<GiftWithStock[]> => {
 
     for(const purchase of purchases) {
         const key = purchase.gift.id;
-        dicPurchase.set(key, (dicPurchase.get(key) || 0) + 1);
+        dicPurchase.set(key, (dicPurchase.get(key) || 0) + purchase.qtyQuotas);
     }
 
     return lst.map(x => {

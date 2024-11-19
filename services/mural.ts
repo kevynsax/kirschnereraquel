@@ -1,6 +1,7 @@
 import { getCollection } from "./database.ts";
 import { resetProducts } from "./gifts.ts";
 import { CreatePostDto, Post } from '../models/Post.ts';
+import { migrateDonations } from './donation.ts';
 
 const db = getCollection<Post>("mural");
 
@@ -15,6 +16,10 @@ const allCommands = [
         command: "reset-products",
         action: resetProducts,
     },
+    {
+        command: 'migrate-donations',
+        action: migrateDonations
+    }
 ];
 
 export const listAllPosts = async () => {

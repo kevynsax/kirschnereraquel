@@ -19,7 +19,7 @@ export interface BaseDonation{
         document?: string;
     },
     message: string;
-    amount: number;
+    qtyQuotas: number;
     status: DonationStatus;
     type: DonationType;
     createdAt: Date;
@@ -45,7 +45,7 @@ export interface BaseCreateDonationDto{
         phone: string;
     },
     message: string;
-    amount: number;
+    qtyQuotas: number;
     type: DonationType;
 }
 

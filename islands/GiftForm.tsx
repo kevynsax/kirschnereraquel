@@ -19,8 +19,7 @@ import { FieldCardNumber } from "./utils/FieldCardNumber.tsx";
 
 interface Props {
     product: Gift;
-    price: number;
-    onFormWasSent: () => void;
+    qtyQuotas: number;
 }
 
 const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
@@ -65,7 +64,7 @@ export const GiftForm = (props: Props) => {
             giftId: props.product.id,
             donor: { name, phone },
             message,
-            amount: props.price,
+            amount: props.product.price,
             type: DonationType.PIX,
         };
 
@@ -79,7 +78,6 @@ export const GiftForm = (props: Props) => {
 
         const donation = await req.json();
 
-        props.onFormWasSent();
         setNewDonation(donation);
 
         return keepUpdatingUntilIsPaid(donation.id);
@@ -91,7 +89,7 @@ export const GiftForm = (props: Props) => {
             giftId: props.product.id,
             donor: { name, phone },
             message,
-            amount: props.price,
+            amount: props.product.price,
             type: DonationType.CREDIT_CARD,
             payerInfo: {
                 document,
@@ -126,7 +124,6 @@ export const GiftForm = (props: Props) => {
 
         const donation = await req.json();
 
-        props.onFormWasSent();
         setNewDonation(donation);
     };
 

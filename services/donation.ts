@@ -2,6 +2,7 @@ import { getCollection } from './database.ts';
 import { getGift } from './gifts.ts';
 import { sendSms } from './smsService.ts';
 import { QrCodePix as Pix } from 'npm:qrcode-pix';
+import { Decimal } from 'npm:decimal.js';
 import {
     CreateCreditCardDonationDto,
     CreateDonationDto,
@@ -14,6 +15,28 @@ import { createPayment } from './paymentCreditCard.ts';
 
 
 const db = getCollection<Donation>('donations');
+
+export const migrateDonations = async () => {
+    const lst = await db.list();
+
+    for(const donation of lst){
+        if(!!donation.qtyQuotas)
+            continue;
+
+        donation.qtyQuotas = (donation as any).amount / donation.gift.price;
+        if(donation.qtyQuotas !== Math.floor(donation.qtyQuotas)){
+            console.log('Error migrating donation with id ' + donation.id);
+            console.log(donation);
+            console.log('Amount: ' + (donation as any).amount);
+            console.log('Price: ' + donation.gift.price);
+            console.log('QtyQuotas: ' + donation.qtyQuotas);
+            // throw new Error(`Invalid amount.`);
+
+            donation.qtyQuotas = 0;
+        }
+        await db.set(donation);
+    }
+}
 
 export const getDonation = async (id: string): Promise<Donation> => {
     const result = await db.get(id);
@@ -67,7 +90,7 @@ const createPixDonation = async (payload: CreatePixDonationDto, origin: string):
         message: 'Presente casamento - ',
         name: 'Kirschner Klava',
         city: 'Brasilia',
-        value: payload.amount,
+        value: new Decimal(gift.price).times(payload.qtyQuotas).toNumber(),
     })
 
     const donation: Donation = {
@@ -78,7 +101,7 @@ const createPixDonation = async (payload: CreatePixDonationDto, origin: string):
             phone: payload.donor.phone
         },
         message: payload.message,
-        amount: payload.amount,
+        qtyQuotas: payload.qtyQuotas,
         status: DonationStatus.PENDING,
         type: DonationType.PIX,
         createdAt: new Date(),
@@ -109,7 +132,7 @@ const createCreditCardDonation = async (payload: CreateCreditCardDonationDto, or
             document: payload.payerInfo.document,
         },
         message: payload.message,
-        amount: payload.amount,
+        qtyQuotas: payload.qtyQuotas,
         status: DonationStatus.PENDING,
         type: DonationType.CREDIT_CARD,
         createdAt: new Date(),

@@ -8,12 +8,14 @@ interface CheckoutProps {
 }
 
 export const CheckoutBody = (props: CheckoutProps) => {
-    const [total, setTotal] = useState(props.product.price);
-    const [canChangeValue, setCanChangeValue] = useState(true);
+    const total = new Intl.NumberFormat("pt-BR", {
+        style: "currency",
+        currency: "BRL",
+    }).format(props.product.price);
 
     return (
         <>
-            <GiftForm product={props.product} price={total} onFormWasSent={() => setCanChangeValue(false)} />
+            <GiftForm product={props.product} qtyQuotas={3} />
             <div className="summary">
                 <div className="header">
                     <div className="avatar">
@@ -27,25 +29,13 @@ export const CheckoutBody = (props: CheckoutProps) => {
                 <div className="product">
                     <span className="name">{props.product.name}</span>
                     <span className="price">
-                        {canChangeValue && (
-                            <FieldPrice onChange={setTotal} placeHolder='23,51' value={total} />
-                        )}
-                        {!canChangeValue && (
-                            new Intl.NumberFormat("pt-BR", {
-                                style: "currency",
-                                currency: "BRL",
-                            }).format(total)
-                        )}
+                        {total}
                     </span>
                 </div>
 
                 <div className="total">
                     <span>Total</span>
-                    <span>
-                        {new Intl.NumberFormat("pt-BR", {
-                            style: "currency",
-                            currency: "BRL",
-                        }).format(total)}</span>
+                    <span>{total}</span>
                 </div>
 
                 <div className="card-info">
