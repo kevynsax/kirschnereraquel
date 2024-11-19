@@ -6,7 +6,7 @@ const linkLembrete =
 
 export default function LocalCard() {
     return (
-        <div className="place">
+        <div className="place" id='local'>
             <div class="card-place">
                 <div className="image-wrapper">
                     <img src="local.jpg" />

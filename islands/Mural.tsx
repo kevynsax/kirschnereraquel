@@ -65,7 +65,7 @@ export default function Mural(props: MuralProps) {
     }
 
     return (
-        <div className="mural">
+        <div className="mural" id='mural'>
             <h6 className="title">Mural de Recados</h6>
 
             <div className="posts">

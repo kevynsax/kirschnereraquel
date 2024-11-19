@@ -4,7 +4,7 @@ import { FreshContext, PageProps } from "$fresh/server.ts";
 import { listAllPosts } from '../services/mural.ts';
 import Mural from "../islands/Mural.tsx";
 import { Gifts } from '../islands/Gifts.tsx';
-import { AppBar } from '../components/AppBar.tsx';
+import { AppBar } from '../islands/utils/AppBar.tsx';
 import { listAllGifts } from '../services/gifts.ts';
 import { GiftWithStock } from '../models/Gift.ts';
 import { Post } from "../models/Post.ts";

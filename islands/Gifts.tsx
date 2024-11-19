@@ -12,7 +12,7 @@ interface Props {
 
 export const Gifts = (props: Props) => {
     return (
-        <div className="gifts">
+        <div className="gifts" id='gifts'>
             <h1>Presentes</h1>
 
             <div className="gift-cover">
