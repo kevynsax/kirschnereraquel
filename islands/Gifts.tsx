@@ -1,6 +1,7 @@
 import { Button } from "../components/Button.tsx";
 import { GiftWithStock } from "../models/Gift.ts";
 import { useCallback, useState } from "preact/hooks";
+import { Decimal } from 'npm:decimal.js';
 
 const formatter = new Intl.NumberFormat("pt-BR", {
     style: "currency",
@@ -42,11 +43,11 @@ const Gift = (props: { gift: GiftWithStock }) => {
     const [qtyQuotas, setQtyQuotas] = useState(1);
 
     const increaseQuotas = useCallback(() => {
-        if(qtyQuotas >= props.gift.qtyQuotas)
+        if(qtyQuotas >= props.gift.availableQuotas)
             return;
 
         setQtyQuotas(qtyQuotas + 1);
-    }, [setQtyQuotas, qtyQuotas, props.gift.qtyQuotas]);
+    }, [setQtyQuotas, qtyQuotas, props.gift.availableQuotas]);
 
     const decreaseQuotas = useCallback(() => {
         if(qtyQuotas <= 1)
@@ -55,7 +56,7 @@ const Gift = (props: { gift: GiftWithStock }) => {
         setQtyQuotas(qtyQuotas - 1);
     }, [setQtyQuotas, qtyQuotas]);
 
-    const increaseIsDisabled = qtyQuotas >= props.gift.qtyQuotas;
+    const increaseIsDisabled = qtyQuotas >= props.gift.availableQuotas;
     const decreaseIsDisabled = qtyQuotas <= 1;
 
     const decreaseStyle = decreaseIsDisabled ? "decrease disabled" : "decrease";
@@ -68,12 +69,19 @@ const Gift = (props: { gift: GiftWithStock }) => {
 
     const price = gift.price * qtyQuotas;
 
+    const percentageAvailable = new Decimal(availableQuotas).div(gift.qtyQuotas).times(100).toNumber();
+
     return (
         <div className={`product ${disabledStyle}`}>
-            <img src={gift.image} alt={gift.name} />
+            <div className="image">
+                <img src={gift.image} alt={gift.name} />
+                <span className="quota-overlay" style={{height: `${100 - percentageAvailable}%`}}></span>
+            </div>
+
             <span className="name">{gift.name}</span>
             <span className="description">{gift.description}</span>
             <span className="price">{formatter.format(price)}</span>
+
             {gift.qtyQuotas > 1 && !isDisabled && (
                 <div className="quotas">
                     <div className={decreaseStyle} onClick={decreaseQuotas}>-</div>
@@ -81,6 +89,7 @@ const Gift = (props: { gift: GiftWithStock }) => {
                     <div className={increaseStyle} onClick={increaseQuotas}>+</div>
                 </div>
             )}
+
             <Button
                 disabled={isDisabled}
                 onClick={() => window.location.href = `checkout/${gift.id}?qtyQuotas=${qtyQuotas}`}
