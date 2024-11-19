@@ -769,24 +769,34 @@ html, body {
         }
     }
 
-    .home .gifts .products .product {
-        max-width: unset;
-        width: 100%;
+    .home .gifts .products {
+        padding: 0;
+        .product {
+            max-width: unset;
+            width: calc(50vw - 48px);
+            margin: 8px;
+            align-content: space-around;
 
-        background: white;
+            background: white;
 
-        padding: 16px;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        border-radius: 8px;
+            padding: 16px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
 
-        .name {
-            margin-top: 8px;
-        }
+            .name {
+                margin-top: 8px;
+            }
 
-        img{
-            width: 100%;
-            height: unset;
-            border: none;
+            span.description {
+                height: unset;
+                margin-bottom: 8px;
+            }
+
+            img {
+                width: 100%;
+                height: 180px;
+                border: none;
+            }
         }
     }
 }
