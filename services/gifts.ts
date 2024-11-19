@@ -17,6 +17,13 @@ export const resetProducts = async () => {
     }
 }
 
+export const updateProduct = <K extends keyof Gift>(attribute: K) => async (id: string, value: any): Promise<void> => {
+    const product = await db.get(id);
+    product[attribute] = value;
+
+    await db.set(product);
+}
+
 
 export const getGift = async (id: string): Promise<Gift> => {
     const gift = await db.get(id);
