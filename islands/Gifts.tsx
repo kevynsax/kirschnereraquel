@@ -18,6 +18,7 @@ export const Gifts = (props: Props) => {
                     <div className='product'>
                         <img src={product.image} />
                         <span className="name">{product.name}</span>
+                        <span className="description">{product.description}</span>
                         <span className="price">{formatter.format(product.price)}</span>
                         <Button onClick={() => window.location.href = `checkout/${product.id}`}>Presentear</Button>
                     </div>

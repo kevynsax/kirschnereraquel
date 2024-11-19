@@ -1,4 +1,4 @@
-import { Logo } from './Logo.tsx';
+import { Logo } from '../islands/utils/Logo.tsx';
 
 export const AppBar = () => {
     return (

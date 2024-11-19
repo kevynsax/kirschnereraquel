@@ -68,6 +68,12 @@ html, body {
 
     font-family: var(--third-font), cursive;
 
+    cursor: pointer;
+
+    &:hover{
+        opacity: .9;
+    }
+
     span:nth-child(2) {
         font-size: .65em;
     }
@@ -575,8 +581,8 @@ html, body {
 
         .products {
             display: flex;
-            justify-content: center;
             flex-wrap: wrap;
+            justify-content: center;
 
             padding: 32px;
 
@@ -590,12 +596,18 @@ html, body {
 
                     &.name {
                         font-weight: bold;
+                        height: 42px;
+                    }
+
+                    &.description{
+                        font-weight: 300;
+                        height: 42px;
                     }
 
                     &.price {
                         margin-bottom: 8px;
 
-                        font-weight: 300;
+                        font-weight: 500;
                     }
                 }
 
@@ -605,7 +617,8 @@ html, body {
                 }
 
                 img {
-                    width: 100%;
+                    width: 210px;
+                    height: 210px;
                     border: 1px solid rgba(.3, .3, .3, .1);
 
                     object-fit: cover;
@@ -959,6 +972,7 @@ html, body {
             .price {
                 font-weight: 300;
                 max-width: 110px;
+            }
             }
         }
 

@@ -1,6 +1,6 @@
 import { FreshContext, Handlers, PageProps } from "$fresh/server.ts";
 import { getGift } from "../../services/gifts.ts";
-import { Logo } from "../../components/Logo.tsx";
+import { Logo } from "../../islands/utils/Logo.tsx";
 import { GiftForm } from "../../islands/GiftForm.tsx";
 import { CheckoutBody } from "../../islands/CheckoutBody.tsx";
 import { Gift } from '../../models/Gift.ts';

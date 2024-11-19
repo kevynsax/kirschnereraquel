@@ -27,6 +27,7 @@ import * as $utils_FieldCardNumber from "./islands/utils/FieldCardNumber.tsx";
 import * as $utils_FieldMasked from "./islands/utils/FieldMasked.tsx";
 import * as $utils_FieldPhoneNumber from "./islands/utils/FieldPhoneNumber.tsx";
 import * as $utils_FieldPrice from "./islands/utils/FieldPrice.tsx";
+import * as $utils_Logo from "./islands/utils/Logo.tsx";
 import * as $utils_QrCode from "./islands/utils/QrCode.tsx";
 import type { Manifest } from "$fresh/server.ts";
 
@@ -59,6 +60,7 @@ const manifest = {
     "./islands/utils/FieldMasked.tsx": $utils_FieldMasked,
     "./islands/utils/FieldPhoneNumber.tsx": $utils_FieldPhoneNumber,
     "./islands/utils/FieldPrice.tsx": $utils_FieldPrice,
+    "./islands/utils/Logo.tsx": $utils_Logo,
     "./islands/utils/QrCode.tsx": $utils_QrCode,
   },
   baseUrl: import.meta.url,
