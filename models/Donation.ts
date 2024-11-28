@@ -22,6 +22,7 @@ export interface BaseDonation{
     qtyQuotas: number;
     status: DonationStatus;
     type: DonationType;
+    deletedAt?: Date;
     createdAt: Date;
     updatedAt: Date;
 }

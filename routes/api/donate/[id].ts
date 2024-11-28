@@ -1,5 +1,5 @@
 import { FreshContext, Handlers } from "$fresh/server.ts";
-import { getDonation, markPixAsReceived } from '../../../services/donation.ts';
+import { deleteDonation, getDonation, markPixAsReceived } from '../../../services/donation.ts';
 
 interface MarkAsReceivedPayload{
     password: string;
@@ -25,5 +25,16 @@ export const handler: Handlers = {
             return new Response((err as any).message, { status: 400 });
         }
     },
+    async DELETE(_req: Request, _ctx: FreshContext): Promise<Response> {
+        const form = await _req.json() as MarkAsReceivedPayload;
+
+        try {
+            await deleteDonation(form.donationId, form.password);
+
+            return new Response('ok');
+        }catch (err) {
+            return new Response((err as any).message, { status: 400 });
+        }
+    }
 
 }

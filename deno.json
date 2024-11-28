@@ -9,6 +9,7 @@
     "preview": "deno run -A main.ts",
     "update": "deno run -A -r https://fresh.deno.dev/update ."
   },
+  "unstable": ["kv"],
   "lint": {
     "rules": {
       "tags": [
@@ -30,7 +31,9 @@
   },
   "compilerOptions": {
     "jsx": "react-jsx",
-    "jsxImportSource": "preact"
+    "jsxImportSource": "preact",
+    "lib": ["deno.unstable"]
   },
   "nodeModulesDir": "auto"
+
 }

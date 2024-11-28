@@ -13,29 +13,12 @@ import {
 } from '../models/Donation.ts';
 import { createPayment } from './paymentCreditCard.ts';
 
+const correctPassword = 'KirschnerKlava2024';
 
 const db = getCollection<Donation>('donations');
 
-export const migrateDonations = async () => {
-    const lst = await db.list();
-
-    for(const donation of lst){
-        if(!!donation.qtyQuotas)
-            continue;
-
-        donation.qtyQuotas = (donation as any).amount / donation.gift.price;
-        if(donation.qtyQuotas !== Math.floor(donation.qtyQuotas)){
-            console.log('Error migrating donation with id ' + donation.id);
-            console.log(donation);
-            console.log('Amount: ' + (donation as any).amount);
-            console.log('Price: ' + donation.gift.price);
-            console.log('QtyQuotas: ' + donation.qtyQuotas);
-            // throw new Error(`Invalid amount.`);
-
-            donation.qtyQuotas = 0;
-        }
-        await db.set(donation);
-    }
+export const listAllDonations = async () => {
+    return await db.list();
 }
 
 export const getDonation = async (id: string): Promise<Donation> => {
@@ -52,8 +35,24 @@ export const lstDonations = async (): Promise<Donation[]> => {
     return await db.list();
 }
 
+export const deleteDonation = async (id: string, password: string): Promise<void> => {
+    if(password !== correctPassword){
+        throw new Error('Invalid password');
+    }
+
+    const donation = await getDonation(id);
+    donation.deletedAt = new Date();
+    await db.set(donation);
+
+    const message = 'Donation with id ' + id + ' was marked as deleted.';
+    const phoneNumber = '11934721092';
+
+    if(!origin.includes('localhost'))
+        await sendSms(phoneNumber, message);
+}
+
 export const markPixAsReceived = async (id: string, password: string): Promise<void> => {
-    if(password !== 'KirschnerKlava2024'){
+    if(password !== correctPassword){
         throw new Error('Invalid password');
     }
 

@@ -1,7 +1,12 @@
 import { FreshContext, Handlers } from "$fresh/server.ts";
-import { createDonation } from "../../../services/donation.ts";
+import { createDonation, listAllDonations } from '../../../services/donation.ts';
 
 export const handler: Handlers = {
+    GET: async (_req: Request, _ctx: FreshContext): Promise<Response> => {
+        const result = await listAllDonations();
+
+        return new Response(JSON.stringify(result));
+    },
     POST: async (_req: Request, _ctx: FreshContext): Promise<Response> => {
         const form = await _req.json();
 
