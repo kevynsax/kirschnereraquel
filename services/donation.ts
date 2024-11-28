@@ -171,10 +171,10 @@ const createCreditCardDonation = async (payload: CreateCreditCardDonationDto, or
 
     console.log(message);
 
+    await createPayment(donation, payload, remoteIp);
+
     if(!origin.includes('localhost'))
         await sendSms(phoneNumber, message);
-
-    await createPayment(donation, payload, remoteIp);
 
     donation.status = DonationStatus.PAID;
     donation.updatedAt = new Date();
