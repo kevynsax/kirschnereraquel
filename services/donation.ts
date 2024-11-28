@@ -32,7 +32,9 @@ export const getDonation = async (id: string): Promise<Donation> => {
 }
 
 export const lstDonations = async (): Promise<Donation[]> => {
-    return await db.list();
+    const lst = await listAllDonations();
+
+    return lst.filter(x => !x.deletedAt);
 }
 
 export const deleteDonation = async (id: string, password: string): Promise<void> => {
