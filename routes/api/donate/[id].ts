@@ -29,7 +29,7 @@ export const handler: Handlers = {
         const form = await _req.json() as MarkAsReceivedPayload;
 
         try {
-            await deleteDonation(form.donationId, form.password);
+            await deleteDonation(form.donationId, form.password, _ctx.url.origin);
 
             return new Response('ok');
         }catch (err) {

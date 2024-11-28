@@ -37,7 +37,7 @@ export const lstDonations = async (): Promise<Donation[]> => {
     return lst.filter(x => !x.deletedAt);
 }
 
-export const deleteDonation = async (id: string, password: string): Promise<void> => {
+export const deleteDonation = async (id: string, password: string, origin: string): Promise<void> => {
     if(password !== correctPassword){
         throw new Error('Invalid password');
     }
