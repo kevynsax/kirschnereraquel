@@ -12,13 +12,16 @@ const formatter = new Intl.NumberFormat('pt-BR', {
 });
 
 export const DonationDetailed = (props: Props) => {
-    const {donor, gift, status, ...donation} = props.donation;
+    const {donor, gift, ...donation} = props.donation;
     const amount = donation.qtyQuotas * gift.price;
 
     const [loading, setLoading] = useState(false);
     const [password, setPassword] = useState('');
 
     const codeRef = useRef();
+
+    const status = donation.deletedAt ? 'deleted' : donation.status;
+    const showPasswordField = status === 'pending' || status === 'paid';
 
     const markAsPaid = useCallback(async () => {
         setLoading(true);
@@ -77,10 +80,11 @@ export const DonationDetailed = (props: Props) => {
 
             <div>Gift: {gift.name} ({formatter.format(gift.price)})</div>
 
-            <div>Status: {status}</div>
+            <div style={{marginBottom: 24}}>Status: {status}</div>
 
-            <Field value={password} onChange={setPassword} placeholder='Digite sua senha' type='password' />
-
+            {showPasswordField && (
+                <Field value={password} onChange={setPassword} placeholder='Digite sua senha' type='password' />
+            )}
             {status === 'pending' && (
                 <button style={{ margin: '16px 0' }} onClick={markAsPaid}>Confirmar recebimento</button>
             )}
