@@ -3,7 +3,8 @@ import axios, { AxiosRequestConfig } from "npm:axios";
 import { Decimal } from 'npm:decimal.js';
 
 //const API_KEY = "$aact_YTU5YTE0M2M2N2I4MTliNzk0YTI5N2U5MzdjNWZmNDQ6OjAwMDAwMDAwMDAwMDA1MDkzNTE6OiRhYWNoXzUwZjlmYzFlLTU0N2QtNDAzZC04MGFjLWZkZjIzYTA1NmYzYw==";
-const API_KEY = "$aact_YTU5YTE0M2M2N2I4MTliNzk0YTI5N2U5MzdjNWZmNDQ6OjAwMDAwMDAwMDAwMDA1MDkzNTE6OiRhYWNoXzQ3ODVjNzdiLTk5NjctNGY5OS1iZTI3LTRhMjZmZDE4OTdlNw==";
+//const API_KEY = "$aact_YTU5YTE0M2M2N2I4MTliNzk0YTI5N2U5MzdjNWZmNDQ6OjAwMDAwMDAwMDAwMDA1MDkzNTE6OiRhYWNoXzQ3ODVjNzdiLTk5NjctNGY5OS1iZTI3LTRhMjZmZDE4OTdlNw==";
+const API_KEY = "$aact_YTU5YTE0M2M2N2I4MTliNzk0YTI5N2U5MzdjNWZmNDQ6OjAwMDAwMDAwMDAwMDA1MDkzNTE6OiRhYWNoX2RjZGViM2YyLTY1OGMtNGFmNi1hYjQxLTNlMTM5OTA3ZGIzMA==";
 const API_URL = "https://api.asaas.com/v3";
 
 const httpConfig: AxiosRequestConfig = {
@@ -25,10 +26,16 @@ const insertCustomer = (donation: Donation): Promise<string> => {
         .catch(err => {
             console.error('Asaas adapter error');
             console.error(`Error creating customer. ${JSON.stringify(payload)}`);
-            console.error(err.response.data.errors[0].description)
+            console.error(err.response.data)
             console.error(err.response.status)
+
+            if(err.response.status === 401){
+                throw new Error('Invalid API key');
+            }
             console.error(err.response.headers)
-            throw new Error(err.response.data.errors[0].description);
+
+            const {errors, ...error} = err.response.data;
+            throw new Error(errors? errors[0].description : error);
         });
 };
 
