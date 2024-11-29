@@ -73,7 +73,8 @@ export function PostCard(props: PostCardProps) {
 
     const { post } = props;
 
-    const initials = post.author.split(" ").map((name) => name[0]).join("");
+    const allInitials = post.author.split(" ").map((name: string) => name[0]);
+    const initials = allInitials[0] + allInitials[allInitials.length - 1];
 
     return (
         <div class="post">
