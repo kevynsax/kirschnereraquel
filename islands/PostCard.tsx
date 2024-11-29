@@ -73,13 +73,13 @@ export function PostCard(props: PostCardProps) {
 
     const { post } = props;
 
-    const allInitials = post.author.split(" ").map((name: string) => name[0]);
+    const allInitials: string[] = post.author.trim().split(" ").map((name: string) => name[0]);
     const initials = allInitials[0] + allInitials[allInitials.length - 1];
 
     return (
         <div class="post">
             <div className="header">
-                <div className="avatar">{initials}</div>
+                <div className="avatar">{initials.toUpperCase()}</div>
                 <div className="info">
                     <span>{post.author}</span>
                     <span>
