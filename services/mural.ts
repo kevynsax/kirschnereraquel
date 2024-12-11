@@ -1,5 +1,5 @@
 import { getCollection } from "./database.ts";
-import { resetProducts, updateProduct } from './gifts.ts';
+import { addProducts, updateProduct } from './gifts.ts';
 import { CreatePostDto, Post } from '../models/Post.ts';
 
 const db = getCollection<Post>("mural");
@@ -16,8 +16,8 @@ const allCommands: Delegator[] = [
         action: deleteAllPosts,
     },
     {
-        command: "reset-products",
-        action: resetProducts,
+        command: "add-products",
+        action: addProducts,
     },
     {
         command: 'update-product-name',

@@ -237,7 +237,54 @@ const lst: PartialGift[] = [
     },
 ];
 
-export const defaultGifts: Gift[] = lst.map((x, i) => ({
+export const secondPartialGifts: PartialGift[] = [
+    {
+        name: 'Passeio de quadriciclo',
+        description: 'Para momentos de aventura e diversão a dois na lua de mel',
+        price: 300,
+        image: 'gifts/passeio-de-quadriciclo.JPG',
+    },
+    {
+        name: 'Lençóis',
+        description: 'Para noites de descanso ainda mais confortáveis',
+        price: 150,
+        image: 'gifts/lencois.JPG',
+    },
+    {
+        name: 'Travesseiros',
+        description: 'Para sonhos tranquilos e um descanso perfeito no nosso novo lar',
+        price: 130,
+        image: 'gifts/travesseiros.JPG',
+    },
+    {
+        name: 'Panela de pressão',
+        description: 'Para preparar receitas deliciosas e compartilhar momentos especiais na cozinha',
+        price: 160,
+        image: 'gifts/panela-de-pressao.JPG',
+    },
+    {
+        name: 'Soundbar',
+        description: 'Para transformar nossa sala em um cinema e curtir cada trilha sonora juntos!',
+        price: 350,
+        image: 'gifts/soundbar.JPG',
+    },
+    {
+        name: 'Passeio de balão',
+        description: 'Contribua para um voo mágico sobre paisagens inesquecíveis na nossa lua de mel',
+        price: 150,
+        qtyQuotas: 10,
+        image: 'gifts/passeio-de-balao.JPG',
+    },
+    {
+        name: 'Conjunto de pratos',
+        description: 'Para servir refeições e celebrar com estilo todos os nossos momentos felizes',
+        price: 180,
+        image: 'gifts/conjunto-de-pratos.JPG',
+    }
+
+]
+
+export const secondGifts: Gift[] = secondPartialGifts.map((x, i) => ({
     id: crypto.randomUUID(),
     createdAt: new Date(),
     qtyQuotas: x.qtyQuotas || 1,

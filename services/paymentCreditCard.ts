@@ -2,9 +2,6 @@ import { CreateCreditCardDonationDto, Donation } from '../models/Donation.ts';
 import axios, { AxiosRequestConfig } from "npm:axios";
 import { Decimal } from 'npm:decimal.js';
 
-//const API_KEY = "$aact_YTU5YTE0M2M2N2I4MTliNzk0YTI5N2U5MzdjNWZmNDQ6OjAwMDAwMDAwMDAwMDA1MDkzNTE6OiRhYWNoXzUwZjlmYzFlLTU0N2QtNDAzZC04MGFjLWZkZjIzYTA1NmYzYw==";
-//const API_KEY = "$aact_YTU5YTE0M2M2N2I4MTliNzk0YTI5N2U5MzdjNWZmNDQ6OjAwMDAwMDAwMDAwMDA1MDkzNTE6OiRhYWNoXzQ3ODVjNzdiLTk5NjctNGY5OS1iZTI3LTRhMjZmZDE4OTdlNw==";
-//const API_KEY = "$aact_YTU5YTE0M2M2N2I4MTliNzk0YTI5N2U5MzdjNWZmNDQ6OjAwMDAwMDAwMDAwMDA1MDkzNTE6OiRhYWNoX2RjZGViM2YyLTY1OGMtNGFmNi1hYjQxLTNlMTM5OTA3ZGIzMA==";
 const API_KEY = "$aact_YTU5YTE0M2M2N2I4MTliNzk0YTI5N2U5MzdjNWZmNDQ6OjAwMDAwMDAwMDAwMDA1MDkzNTE6OiRhYWNoXzdlY2FmMWJlLTdhYjEtNDNjOS04ZmNmLTc5NDdkMDNmYjZlYg==";
 const API_URL = "https://api.asaas.com/v3";
 
