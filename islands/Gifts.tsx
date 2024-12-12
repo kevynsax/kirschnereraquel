@@ -13,6 +13,14 @@ interface Props {
 }
 
 export const Gifts = (props: Props) => {
+    const sortedProducts =
+        props.products
+            .sort((a, b) => {
+                if(!a.availableQuotas && !!b.availableQuotas){
+                    return 1;
+                }
+                return a.price - b.price;
+            });
     return (
         <div className="gifts" id='gifts'>
             <h1>Presentes</h1>
@@ -31,7 +39,7 @@ export const Gifts = (props: Props) => {
             </div>
 
             <div className="products">
-                {props.products.map((product) => {
+                {sortedProducts.map((product) => {
                     return <Gift key={product.id} gift={product} />;
                 })}
             </div>
