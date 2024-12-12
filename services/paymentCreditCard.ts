@@ -2,13 +2,12 @@ import { CreateCreditCardDonationDto, Donation } from '../models/Donation.ts';
 import axios, { AxiosRequestConfig } from "npm:axios";
 import { Decimal } from 'npm:decimal.js';
 
-const API_KEY = "$aact_YTU5YTE0M2M2N2I4MTliNzk0YTI5N2U5MzdjNWZmNDQ6OjAwMDAwMDAwMDAwMDA1MDkzNTE6OiRhYWNoXzdjOTE1NjExLTM3Y2ItNDhlOC1hZmNlLWM2MTFkOGU1MGY3Ng==";
 const API_URL = "https://api.asaas.com/v3";
 
 const httpConfig: AxiosRequestConfig = {
     baseURL: API_URL,
     headers: {
-        access_token: API_KEY,
+        access_token: Deno.env.get('ASAAS_API'),
     },
 };
 
