@@ -2,13 +2,13 @@ import { getCollection } from './database.ts';
 import { CreateGiftDto, Gift, GiftWithStock } from '../models/Gift.ts';
 import { lstDonations } from './donation.ts';
 import { DonationStatus } from '../models/Donation.ts';
-import { secondGifts } from './constants.ts';
+import { thirdGifts } from './constants.ts';
 
 const db = getCollection<Gift>('gifts');
 
 
 export const addProducts = async () => {
-    const products: Gift[] = [...secondGifts];
+    const products: Gift[] = [...thirdGifts];
 
     for(const product of products) {
         await db.set(product);

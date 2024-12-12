@@ -284,7 +284,16 @@ export const secondPartialGifts: PartialGift[] = [
 
 ]
 
-export const secondGifts: Gift[] = secondPartialGifts.map((x, i) => ({
+export const thirdPartialGifts: PartialGift[] = [
+    {
+        name: 'teste de pagamento',
+        description: 'teste de pagamento',
+        price: 3,
+        image: 'gifts/passeio-de-quadriciclo.JPG',
+    }
+]
+
+export const thirdGifts: Gift[] = thirdPartialGifts.map((x, i) => ({
     id: crypto.randomUUID(),
     createdAt: new Date(),
     qtyQuotas: x.qtyQuotas || 1,
