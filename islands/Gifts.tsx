@@ -78,7 +78,7 @@ const Gift = (props: { gift: GiftWithStock }) => {
                 <span className="quota-overlay" style={{height: `${100 - percentageAvailable}%`}}></span>
             </div>
 
-            <span className="name">{gift.name} {availableQuotas}</span>
+            <span className="name">{gift.name}</span>
             <span className="description">{gift.description}</span>
             <span className="price">{formatter.format(price)}</span>
 

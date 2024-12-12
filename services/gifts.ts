@@ -59,6 +59,9 @@ export const listAllGifts = async (): Promise<GiftWithStock[]> => {
         if(!a.availableQuotas && !!b.availableQuotas)
             return 1;
 
+        if(!!a.availableQuotas && !b.availableQuotas)
+            return -1;
+
         if(a.price < b.price)
             return -1;
 
