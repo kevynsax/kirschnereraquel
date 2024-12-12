@@ -45,16 +45,20 @@ export const listAllGifts = async (): Promise<GiftWithStock[]> => {
             continue;
 
         const key = purchase.gift.id;
-        dicPurchase.set(key, (dicPurchase.get(key) || 0) + purchase.qtyQuotas);
+        dicPurchase.set(key, (dicPurchase.get(key) || 0) + Number(purchase.qtyQuotas));
     }
 
     return lst.map(x => {
         const availableQuotas = x.qtyQuotas - (dicPurchase.get(x.id) || 0);
+
         return {
             ...x,
             availableQuotas,
         }
     }).sort((a, b) => {
+        if(!a.availableQuotas && !!b.availableQuotas)
+            return 1;
+
         if(a.price < b.price)
             return -1;
 

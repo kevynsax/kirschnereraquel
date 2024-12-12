@@ -13,14 +13,6 @@ interface Props {
 }
 
 export const Gifts = (props: Props) => {
-    const sortedProducts =
-        props.products
-            .sort((a, b) => {
-                if(!a.availableQuotas && !!b.availableQuotas){
-                    return 1;
-                }
-                return a.price - b.price;
-            });
     return (
         <div className="gifts" id='gifts'>
             <h1>Presentes</h1>
@@ -39,7 +31,7 @@ export const Gifts = (props: Props) => {
             </div>
 
             <div className="products">
-                {sortedProducts.map((product) => {
+                {props.products.map((product) => {
                     return <Gift key={product.id} gift={product} />;
                 })}
             </div>
@@ -86,7 +78,7 @@ const Gift = (props: { gift: GiftWithStock }) => {
                 <span className="quota-overlay" style={{height: `${100 - percentageAvailable}%`}}></span>
             </div>
 
-            <span className="name">{gift.name}</span>
+            <span className="name">{gift.name} {availableQuotas}</span>
             <span className="description">{gift.description}</span>
             <span className="price">{formatter.format(price)}</span>
 
