@@ -167,12 +167,22 @@ const createCreditCardDonation = async (payload: CreateCreditCardDonationDto, or
 
     await db.set(donation);
 
-    const message: string = 'Someone made a donation using credit card. You can see in the link: ' + origin + '/donation/' + donation.id;
+    const link = origin + '/donation/' + donation.id;
+
+    const message: string = 'Someone made a donation using credit card. You can see in the link: ' + link;
     const phoneNumber = '11934721092';
 
     console.log(message);
 
-    await createPayment(donation, payload, remoteIp);
+    try{
+        await createPayment(donation, payload, remoteIp);
+    } catch (err){
+        const message = 'Error making payment.' + link;
+        const phoneNumber = '11934721092';
+        await sendSms(phoneNumber, message);
+
+        throw err;
+    }
 
     if(!origin.includes('localhost'))
         await sendSms(phoneNumber, message);
