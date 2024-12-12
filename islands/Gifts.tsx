@@ -1,7 +1,7 @@
 import { Button } from "../components/Button.tsx";
 import { GiftWithStock } from "../models/Gift.ts";
 import { useCallback, useState } from "preact/hooks";
-import { Decimal } from 'npm:decimal.js';
+import { Decimal } from "npm:decimal.js";
 
 const formatter = new Intl.NumberFormat("pt-BR", {
     style: "currency",
@@ -14,7 +14,7 @@ interface Props {
 
 export const Gifts = (props: Props) => {
     return (
-        <div className="gifts" id='gifts'>
+        <div className="gifts" id="gifts">
             <h1>Presentes</h1>
 
             <div className="gift-cover">
@@ -43,15 +43,17 @@ const Gift = (props: { gift: GiftWithStock }) => {
     const [qtyQuotas, setQtyQuotas] = useState(1);
 
     const increaseQuotas = useCallback(() => {
-        if(qtyQuotas >= props.gift.availableQuotas)
+        if (qtyQuotas >= props.gift.availableQuotas) {
             return;
+        }
 
         setQtyQuotas(qtyQuotas + 1);
     }, [setQtyQuotas, qtyQuotas, props.gift.availableQuotas]);
 
     const decreaseQuotas = useCallback(() => {
-        if(qtyQuotas <= 1)
+        if (qtyQuotas <= 1) {
             return;
+        }
 
         setQtyQuotas(qtyQuotas - 1);
     }, [setQtyQuotas, qtyQuotas]);
@@ -62,40 +64,53 @@ const Gift = (props: { gift: GiftWithStock }) => {
     const decreaseStyle = decreaseIsDisabled ? "decrease disabled" : "decrease";
     const increaseStyle = increaseIsDisabled ? "increase disabled" : "increase";
 
-    const {availableQuotas, ...gift} = props.gift;
+    const { availableQuotas, ...gift } = props.gift;
 
     const isDisabled = !availableQuotas;
     const disabledStyle = isDisabled ? "disabled" : "";
 
     const price = gift.price * qtyQuotas;
 
-    const percentageAvailable = new Decimal(availableQuotas).div(gift.qtyQuotas).times(100).toNumber();
+    const percentageAvailable = new Decimal(availableQuotas).div(gift.qtyQuotas)
+        .times(100).toNumber();
 
     return (
         <div className={`product ${disabledStyle}`}>
             <div className="image">
                 <img src={gift.image} alt={gift.name} />
-                <span className="quota-overlay" style={{height: `${100 - percentageAvailable}%`}}></span>
+                <span
+                    className="quota-overlay"
+                    style={{ height: `${100 - percentageAvailable}%` }}
+                >
+                </span>
             </div>
 
-            <span className="name">{gift.name}</span>
-            <span className="description">{gift.description}</span>
-            <span className="price">{formatter.format(price)}</span>
+            <div className="info">
+                <span className="name">{gift.name}</span>
+                <span className="description">{gift.description}</span>
+                <span className="price">{formatter.format(price)}</span>
+            </div>
 
             {gift.qtyQuotas > 1 && !isDisabled && (
                 <div className="quotas">
-                    <div className={decreaseStyle} onClick={decreaseQuotas}>-</div>
+                    <div className={decreaseStyle} onClick={decreaseQuotas}>
+                        -
+                    </div>
                     <span>{qtyQuotas}</span>
-                    <div className={increaseStyle} onClick={increaseQuotas}>+</div>
+                    <div className={increaseStyle} onClick={increaseQuotas}>
+                        +
+                    </div>
                 </div>
             )}
 
             <Button
                 disabled={isDisabled}
-                onClick={() => window.location.href = `checkout/${gift.id}?qtyQuotas=${qtyQuotas}`}
+                onClick={() =>
+                    window.location.href =
+                        `checkout/${gift.id}?qtyQuotas=${qtyQuotas}`}
             >
                 Presentear
             </Button>
         </div>
     );
-}
+};
